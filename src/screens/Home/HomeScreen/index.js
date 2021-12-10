@@ -103,12 +103,12 @@ const HomeScreen = ({navigation}) => {
               marginVertical: 12,
             }}>
             {componentItemTop(
-              'Top Seller',
+              'DS Đơn Hàng',
               'badge-account-horizontal-outline',
-              () => navigation.navigate('TopSales'),
+              () => navigation.navigate(NAVIGATION_NAME.ListSaleOrderScreen),
             )}
-            {componentItemTop('Sản Phẩm', 'download-multiple', () =>
-              navigation.navigate('TopSales'),
+            {componentItemTop('Sản Phẩm', 'shopping-search', () =>
+              navigation.navigate(NAVIGATION_NAME.LookUpProduct),
             )}
             {componentItemTop('Ưu Đãi', 'gift-outline', () =>
               navigation.navigate(NAVIGATION_NAME.PromotionScreen),
@@ -122,19 +122,15 @@ const HomeScreen = ({navigation}) => {
           title={`Tạo đơn ${'\n'} hàng`}
           onPress={() => navigation.navigate(NAVIGATION_NAME.ChooseCustomer)}
         />
-
         <ItemHomeMenu
-          iconName="shopping-search"
-          title={`Tra cứu ${'\n'} sản phẩm`}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_NAME.SearchProductScreen)
-          }
+          iconName="badge-account-horizontal"
+          title={'DS đề xuất đại lý bán lẻ'}
+          onPress={() => navigation.navigate(NAVIGATION_NAME.AgentList)}
         />
-
         <ItemHomeMenu
-          iconName="currency-usd-circle"
-          title={'Danh sách chính sách giá'}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.ListPricePolicy)}
+          iconName="account-multiple"
+          title={`Thêm mới ${'\n'} khách hàng`}
+          onPress={() => navigation.navigate(NAVIGATION_NAME.AddCustomer)}
         />
         <ItemHomeMenu
           iconName="file-edit"

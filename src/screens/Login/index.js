@@ -35,23 +35,32 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const login = async () => {
+    setLoading(true);
     const params = {
       username: employeeCode,
       password: password,
     };
     const responseLogin = await ServiceHandle.post(Const.API.Login, params);
-    if (responseLogin.data) {
-      const apiKey = responseLogin.data.apiKey;
+    try {
+      if (responseLogin.data) {
+        const apiKey = responseLogin.data.apiKey;
 
-      ServiceHandle.setHeader(apiKey);
+        ServiceHandle.setHeader(apiKey);
 
-      dispatch(AuthenOverallRedux.Actions.setCookies(apiKey));
+        dispatch(AuthenOverallRedux.Actions.setCookies(apiKey));
 
-      navigation.navigate(NAVIGATION_NAME.ChangeStore, {
-        fromScreen: NAVIGATION_NAME.LoginScreen,
-      });
-    } else {
-      SimpleToast.show(responseLogin.error);
+        navigation.navigate(NAVIGATION_NAME.ChangeStore, {
+          fromScreen: NAVIGATION_NAME.LoginScreen,
+        });
+      } else {
+        setTimeout(() => {
+          SimpleToast.show(responseLogin.error);
+        }, 700);
+      }
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setLoading(false);
     }
   };
 

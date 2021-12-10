@@ -11,6 +11,8 @@ const SearchProductComponent = props => {
   const {data, selectProduct} = props;
   const [isVisible, setIsVisible] = useState(false);
 
+  console.log('data', data);
+
   const renderItem = item => {
     return (
       <CardItem

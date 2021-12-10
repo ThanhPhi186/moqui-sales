@@ -237,4 +237,5 @@ export default {
   noDataYet: 'Chưa có dữ liệu',
   myPromotion: 'Ưu đãi của tôi',
   emptyPromotion: 'Chưa có khuyến mãi nào',
+  totalPayable: 'Tổng tiền phải trả',
 };

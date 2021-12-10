@@ -26,6 +26,13 @@ import {
   ListApplicableStore,
   ChooseCustomer,
   PromotionScreen,
+  LookUpProduct,
+  ListSaleOrderScreen,
+  OrderDetailScreen,
+  AgentList,
+  AgentDetail,
+  AddCustomer,
+  MapScreen,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CustomButtonTab} from '../components/molecules';
@@ -64,7 +71,14 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.ListLocation ||
       routeName === NAVIGATION_NAME.ImportItem ||
       routeName === NAVIGATION_NAME.ListApplicableStore ||
-      routeName === NAVIGATION_NAME.PromotionScreen
+      routeName === NAVIGATION_NAME.PromotionScreen ||
+      routeName === NAVIGATION_NAME.LookUpProduct ||
+      routeName === NAVIGATION_NAME.ListSaleOrderScreen ||
+      routeName === NAVIGATION_NAME.OrderDetailScreen ||
+      routeName === NAVIGATION_NAME.AgentList ||
+      routeName === NAVIGATION_NAME.AgentDetail ||
+      routeName === NAVIGATION_NAME.AddCustomer ||
+      routeName === NAVIGATION_NAME.MapScreen
     ) {
       return false;
     }
@@ -168,6 +182,28 @@ const BottomTabNavigator = () => {
           name={NAVIGATION_NAME.PromotionScreen}
           component={PromotionScreen}
         />
+        <Stack.Screen
+          name={NAVIGATION_NAME.LookUpProduct}
+          component={LookUpProduct}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.ListSaleOrderScreen}
+          component={ListSaleOrderScreen}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.OrderDetailScreen}
+          component={OrderDetailScreen}
+        />
+        <Stack.Screen name={NAVIGATION_NAME.AgentList} component={AgentList} />
+        <Stack.Screen
+          name={NAVIGATION_NAME.AgentDetail}
+          component={AgentDetail}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.AddCustomer}
+          component={AddCustomer}
+        />
+        <Stack.Screen name={NAVIGATION_NAME.MapScreen} component={MapScreen} />
       </Stack.Navigator>
     );
   };

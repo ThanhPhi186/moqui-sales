@@ -29,7 +29,7 @@ const MainAccount = ({navigation}) => {
   const logout = () => {
     dispatch(AuthenOverallRedux.Actions.logout.request());
     dispatch(StoreRedux.Actions.changeStore(''));
-    // ServiceHandle.setHeader('');
+    ServiceHandle.setHeader('');
   };
 
   const changeCompany = () => {

@@ -5,6 +5,7 @@ import {Colors, Mixin} from '../../../styles';
 import {trans} from '../../../utils';
 import {AppText} from '../../../components/atoms';
 import {handleStatus} from '../../../helpers/mcsHelper';
+import moment from 'moment';
 
 const ItemOrder = props => {
   const {item} = props;
@@ -15,21 +16,18 @@ const ItemOrder = props => {
         return Colors.BLUE_CODE.blue600;
       case 'ORDER_CANCELLED':
         return Colors.RED_CODE.red500;
-      case 'ORDER_COMPLETED':
+      case 'OrderCompleted':
         return Colors.GREEN_1;
-      case 'ORDER_CREATED':
+      case 'OrderOpen':
         return Colors.ORANGE_CODE.orange600;
-      case 'ORDER_HOLD':
-        return trans('hasKept'); // Đã giữ
-      case 'ORDER_IN_TRANSIT':
-        return Colors.LIME_CODE.lime800;
+
       case 'ORDER_PROCESSING':
         return trans('processing'); // Processing
       case 'ORDER_REJECTED':
         return trans('wasRejected'); // Đã bị từ chối
       case 'ORDER_SADAPPROVED':
         return trans('salesAdminApproved'); // Sales Admin approved
-      case 'ORDER_DELIVERED':
+      case 'OrderHold':
         return Colors.CYAN_CODE.cyan600;
     }
   };
@@ -60,7 +58,8 @@ const ItemOrder = props => {
         <Text style={styles.code}>{numeral(item.grandTotal).format()} đ</Text>
       </AppText>
       <AppText style={{marginTop: 8}}>
-        Thời gian tạo: <Text>{item.orderDate}</Text>
+        Thời gian tạo:{' '}
+        <Text>{moment(item.entryDate).format('DD-MM-YYYY')}</Text>
       </AppText>
     </TouchableOpacity>
   );

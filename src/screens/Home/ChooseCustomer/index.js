@@ -5,7 +5,7 @@ import {Appbar, FAB, Searchbar} from 'react-native-paper';
 import styles from './styles';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {useTheme} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {removeDiacritics} from '../../../helpers/mcsHelper';
 import {Colors, Mixin} from '../../../styles';
@@ -13,6 +13,7 @@ import {Const, trans} from '../../../utils';
 import {ServiceHandle} from '../../../services';
 import SimpleToast from 'react-native-simple-toast';
 import {ItemCustomer} from '../../../components/molecules';
+import {NAVIGATION_NAME} from '../../../navigations';
 
 const initialLayout = {width: Mixin.device_width};
 
@@ -51,6 +52,8 @@ const ChooseCustomer = ({navigation, route}) => {
     const params = {productStoreId: store.productStoreId};
     const response = await ServiceHandle.get(Const.API.GetCustomers, params);
     if (response.ok) {
+      setDataInline(response.data.inRoute.customers);
+      setDataLeftLine(response.data.outRoute.customers);
     } else {
       SimpleToast.show(response.error, SimpleToast.SHORT);
     }
@@ -91,7 +94,7 @@ const ChooseCustomer = ({navigation, route}) => {
         navigation.navigate('ShopStatistic', {item});
         break;
       default:
-        navigation.navigate('CreateOrderScreen', {item});
+        navigation.navigate(NAVIGATION_NAME.SelectProduct, {item});
     }
   };
 

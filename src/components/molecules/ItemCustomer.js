@@ -30,12 +30,10 @@ const ItemCustomer = props => {
         resizeMode="contain"
       />
       <View style={styles.leftContent}>
-        <AppText style={styles.officeSiteName}>{item.groupName}</AppText>
-        <AppText style={styles.txtContent}>{item.address1}</AppText>
+        <AppText style={styles.officeSiteName}>{item.officeSiteName}</AppText>
+        <AppText style={styles.txtContent}>{item.postalAddress}</AppText>
         <View style={styles.viewRow}>
-          {!!item?.phoneNumber?.contactNumber && (
-            <AppText>{item.phoneNumber.contactNumber}</AppText>
-          )}
+          <AppText>{item.telecomNumber}</AppText>
 
           {type === 'check-status' && (
             <View style={styles.viewStatus}>

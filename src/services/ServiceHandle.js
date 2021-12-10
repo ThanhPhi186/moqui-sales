@@ -40,8 +40,7 @@ const api = create({
 const returnData = response => {
   console.log('response =====>', response);
 
-  // const dispatch = useDispatch();
-  if (response) {
+  if (response.status) {
     if (response.status === 200) {
       return {
         data: response.data,
@@ -51,7 +50,7 @@ const returnData = response => {
     } else {
       return {
         ok: false,
-        error: 'error',
+        error: response.data.errors,
       };
     }
   } else {

@@ -28,6 +28,13 @@ const NAVIGATION_NAME = {
   //update
   ChooseCustomer: 'ChooseCustomer',
   PromotionScreen: 'PromotionScreen',
+  LookUpProduct: 'LookUpProduct',
+  ListSaleOrderScreen: 'ListSaleOrderScreen',
+  OrderDetailScreen: 'OrderDetailScreen',
+  AgentDetail: 'AgentDetail',
+  AgentList: 'AgentList',
+  AddCustomer: 'AddCustomer',
+  MapScreen: 'MapScreen',
 };
 
 export default NAVIGATION_NAME;

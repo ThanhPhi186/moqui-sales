@@ -1,16 +1,22 @@
 export default {
   API: {
     GetDomain: 'https://api.olbius.com/token',
-    // baseURL: 'https://gstest.olbius.com',
-    baseURL: 'http://10.10.5.148:8080',
+    baseURL: 'https://gstest.olbius.com',
+    // baseURL: 'http://10.10.4.19:8080',
     baseImgURL: 'https://testchth.olbius.com',
-    // Login: '/loginMobilemcs',
     Login: '/rest/s1/gsources/login',
     Logout: '/rest/logout',
     //xxxxx
+
     GetProductStores: '/rest/s1/gsources/getProductStores',
     GetCustomers: '/rest/s1/salesnet/mGetCustomers',
     GetPromoList: '/rest/s1/pos/getPromoList',
+    QuickSearch: '/rest/s1/gsources/quickSearch',
+    GetProductDetail: '/rest/s1/sales/getProductDetail',
+    GetSalesOrders: '/rest/s1/salesnet/mGetSalesOrders',
+    GetSalesOrderDetails: '/rest/s1/salesnet/mGetSalesOrderDetails',
+    GetCustomerRegistration: '/rest/s1/salesnet/mGetCustomerRegistration',
+    CreateCustomerAgent: '/rest/s1/salesnet/createCustomerAgent',
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',
     GetAllProductStores: '/mGetAllProductStores',
@@ -66,4 +72,6 @@ export default {
     SADAPPROVED: 'ORDER_SADAPPROVED',
     DELIVERED: 'ORDER_DELIVERED',
   },
+
+  GOOGLE_MAP_API: 'AIzaSyCHu4vQUKFsMnqpjk_HHjIIAU_yejvT5cs',
 };

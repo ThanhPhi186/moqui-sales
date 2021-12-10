@@ -49,6 +49,12 @@ const overallReducer = createReducer(initialState, {
   [Actions.handleLogout]: (state, action) => {
     state.userAuthen = {};
   },
+
+  //get Location
+
+  [Actions.getLocation]: (state, action) => {
+    state.location = action.payload;
+  },
 });
 
 export default overallReducer;

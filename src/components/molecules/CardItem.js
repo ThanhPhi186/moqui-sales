@@ -13,11 +13,11 @@ const CardItem = props => {
   const {
     type,
     item,
-    addAmountProps,
-    lessAmountProps,
+    addQuantityProps,
+    lessQuantityProps,
     styleProps,
     chooseExpDate,
-    changeAmountProps,
+    changeQuantityProps,
   } = props;
 
   return (
@@ -40,9 +40,9 @@ const CardItem = props => {
         />
       </View>
       <View style={styles.leftContent}>
-        <AppText style={styles.nameProduct}>{item.productName}</AppText>
+        <AppText style={styles.nameProduct}>{item.name}</AppText>
         <AppText style={styles.info}>
-          {item.productCode}{' '}
+          {item.productId}{' '}
           {(item.uomId || item.abbreviation) &&
             `(${item.uomId || item.abbreviation})`}
         </AppText>
@@ -61,16 +61,16 @@ const CardItem = props => {
       {type === 'choose' && (
         <>
           <View style={styles.viewQuantity}>
-            <TouchableOpacity onPress={() => lessAmountProps(item)}>
+            <TouchableOpacity onPress={() => lessQuantityProps(item)}>
               <Icon name="minus-circle" size={28} color={Colors.PRIMARY} />
             </TouchableOpacity>
             <TextInput
               style={styles.boxAmount}
               value={item.quantity.toString()}
               keyboardType="number-pad"
-              onChangeText={valueInput => changeAmountProps(valueInput, item)}
+              onChangeText={valueInput => changeQuantityProps(valueInput, item)}
             />
-            <TouchableOpacity onPress={() => addAmountProps(item)}>
+            <TouchableOpacity onPress={() => addQuantityProps(item)}>
               <Icon name="plus-circle" size={28} color={Colors.PRIMARY} />
             </TouchableOpacity>
           </View>

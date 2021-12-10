@@ -20,11 +20,18 @@ import {
   ListApplicableStore,
   ChooseCustomer,
   PromotionScreen,
+  LookUpProduct,
+  ListSaleOrderScreen,
+  OrderDetailScreen,
+  AgentDetail,
+  AgentList,
+  AddCustomer,
 } from './Home';
 import {MainAccount, ChangePassword, ChangeStore} from './Account';
 import ContactScreen from './ContactScreen';
 import ShareScreen from './ShareScreen';
 import RootView from './RootView';
+import MapScreen from './Map';
 
 export {
   LoginScreen,
@@ -54,4 +61,11 @@ export {
   RootView,
   ChooseCustomer,
   PromotionScreen,
+  LookUpProduct,
+  ListSaleOrderScreen,
+  OrderDetailScreen,
+  AgentDetail,
+  AgentList,
+  AddCustomer,
+  MapScreen,
 };

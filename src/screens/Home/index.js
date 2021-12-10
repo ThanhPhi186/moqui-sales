@@ -17,6 +17,10 @@ import {
 } from './Inventory';
 import ChooseCustomer from './ChooseCustomer';
 import PromotionScreen from './PromotionScreen';
+import LookUpProduct from './LookUpProduct';
+import {ListSaleOrderScreen, OrderDetailScreen} from './ListSaleOrder';
+import {AgentDetail, AgentList} from './AgentProposalList';
+import AddCustomer from './AddCustomer';
 
 export {
   HomeScreen,
@@ -38,4 +42,10 @@ export {
   ListApplicableStore,
   ChooseCustomer,
   PromotionScreen,
+  LookUpProduct,
+  ListSaleOrderScreen,
+  OrderDetailScreen,
+  AgentDetail,
+  AgentList,
+  AddCustomer,
 };

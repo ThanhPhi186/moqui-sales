@@ -7,6 +7,7 @@ import CardItem from './CardItem';
 import SearchProductComponent from './SearchProductComponent';
 import IconCart from './IconCart';
 import ItemCustomer from './ItemCustomer';
+import Dropdown from './Dropdown';
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   CardItem,
   IconCart,
   ItemCustomer,
+  Dropdown,
 };
