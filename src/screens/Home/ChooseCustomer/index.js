@@ -31,18 +31,11 @@ const ChooseCustomer = ({navigation, route}) => {
 
   const theme = useTheme();
 
-  const listCustomer = useState([]);
-  const listLeftLine = useState([]);
+  const [listInLine, setListInLine] = useState([]);
+  const [listLeftLine, setListLeftLine] = useState([]);
   const loading = useState(false);
   const [dataInline, setDataInline] = useState();
   const [dataLeftLine, setDataLeftLine] = useState();
-
-  console.log('store', store);
-
-  // useEffect(() => {
-  //   setDataInline(listCustomer);
-  //   setDataLeftLine(listLeftLine);
-  // }, [listCustomer, listLeftLine]);
 
   useEffect(() => {
     getCustomer();
@@ -53,7 +46,9 @@ const ChooseCustomer = ({navigation, route}) => {
     const response = await ServiceHandle.get(Const.API.GetCustomers, params);
     if (response.ok) {
       setDataInline(response.data.inRoute.customers);
+      setListInLine(response.data.inRoute.customers);
       setDataLeftLine(response.data.outRoute.customers);
+      setListLeftLine(response.data.outRoute.customers);
     } else {
       SimpleToast.show(response.error, SimpleToast.SHORT);
     }
@@ -64,18 +59,20 @@ const ChooseCustomer = ({navigation, route}) => {
   };
 
   const onChangeSearch = txt => {
-    const searchInline = listCustomer.filter(elm => {
+    const searchInline = listInLine.filter(elm => {
       return (
-        removeDiacritics(elm.address1).includes(removeDiacritics(txt)) ||
-        removeDiacritics(elm.groupName).includes(removeDiacritics(txt)) ||
-        elm.phoneNumber.contactNumber.includes(txt)
+        removeDiacritics(elm?.postalAddress).includes(removeDiacritics(txt)) ||
+        removeDiacritics(elm?.officeSiteName).includes(removeDiacritics(txt))
+        // ||
+        // elm?.telecomNumber.includes(txt)
       );
     });
     const searchLeftLine = listLeftLine.filter(elm => {
       return (
-        removeDiacritics(elm.address1).includes(removeDiacritics(txt)) ||
-        removeDiacritics(elm.groupName).includes(removeDiacritics(txt)) ||
-        elm.phoneNumber.contactNumber.includes(txt)
+        removeDiacritics(elm?.postalAddress).includes(removeDiacritics(txt)) ||
+        removeDiacritics(elm?.officeSiteName).includes(removeDiacritics(txt))
+        // ||
+        // elm?.telecomNumber.includes(txt)
       );
     });
     setDataInline(searchInline);
@@ -182,7 +179,7 @@ const ChooseCustomer = ({navigation, route}) => {
       <FAB
         style={styles.fab}
         icon="plus"
-        onPress={() => navigation.navigate('createCustomer')}
+        onPress={() => navigation.navigate(NAVIGATION_NAME.AddCustomer)}
       />
     </View>
   );

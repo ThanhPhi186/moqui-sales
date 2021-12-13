@@ -21,6 +21,9 @@ import hasLocationPermission from '../../../helpers/LocationHelper';
 import {AuthenOverallRedux} from '../../../redux';
 import {FormInput} from '../../../components/atoms';
 import {AppDialog, Dropdown} from '../../../components/molecules';
+import {ScrollView} from 'react-native-gesture-handler';
+import {NAVIGATION_NAME} from '../../../navigations';
+import Toast from 'react-native-toast-message';
 
 Geocoder.init(Const.GOOGLE_MAP_API);
 
@@ -41,19 +44,25 @@ const AddCustomer = ({navigation}) => {
 
   const location = useSelector(state => state.AuthenOverallReducer.location);
 
-  const channel = useSelector(state => state.StoreReducer.channel);
+  const productStoreId = useSelector(
+    state => state.StoreReducer.store.productStoreId,
+  );
 
   const [listRoute, setListRoute] = useState([]);
 
   const [rule, setRule] = useState('');
   const [note, setNote] = useState('');
+  const [listGender, setListGender] = useState([
+    {label: trans('Male'), value: 'M'},
+    {label: trans('Female'), value: 'F'},
+  ]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ServiceHandle.post(BaseUrl + Const.API.GetAllRoute).then(res => {
+    ServiceHandle.get(Const.API.GetAllRoute).then(res => {
       if (res.ok) {
-        const convertRule = res.data.results.map(elm => {
+        const convertRule = res.data.routes.map(elm => {
           return {
             label: `[${elm.routeId}] ${elm.routeName}`,
             value: elm.routeId,
@@ -82,7 +91,7 @@ const AddCustomer = ({navigation}) => {
   }, [location]);
 
   useEffect(() => {
-    // getCurrentLocation();
+    getCurrentLocation();
   }, []);
 
   const getCurrentLocation = async () => {
@@ -159,52 +168,69 @@ const AddCustomer = ({navigation}) => {
     return false;
   };
 
+  console.log('addressDetail', address);
+
   const createCustomer = () => {
     if (handelCheckValue()) {
       setModalError(true);
       return;
     }
+    // partyCode;
+    // fullName;
+    // productStoreId;
+    // gender;
+    // note;
+    // officeSiteName;
+    // salesmanId;
+    // routeId;
+    // countryGeoId;
+    // stateProvinceGeoId;
+    // districtId;
+    // wardId;
+    // tarAddress;
+    // telecomNumber;
+    // emailAddress;
+    // latitude;
+    // longitude;
 
     const params = {
-      customerName,
-      gender,
-      officeSiteName: storeName,
-      phone: phoneNumber,
-      address: address.formatted_address,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      routeId: rule,
+      fullName: customerName, //done
+      gender, //done
+      officeSiteName: storeName, //done
+      telecomNumber: phoneNumber, //done
+      tarAddress: address.formatted_address, //done
+      latitude: location.latitude, //done
+      longitude: location.longitude, //done
+      routeId: rule, //done
       birthDay: new Date(moment(dateOfBirth, 'DD/MM/YYYY').unix() * 1000),
       startDate: new Date(moment(startDate, 'DD/MM/YYYY').unix() * 1000),
       note,
-      productStoreId: channel,
-      districtGeoId: addressDetail[0].long_name,
-      stateProvinceGeoId: addressDetail[1].long_name,
-      countryGeoId: addressDetail[2].long_name,
+      productStoreId: productStoreId, //done
+      districtName: addressDetail[0].long_name, //done
+      stateProvinceGeoName: addressDetail[1].long_name, // done
+      countryGeoName: addressDetail[2].long_name, //done
+      wardName: addressDetail[2].long_name, //done
     };
     console.log('paraamsssss', params);
-    ServiceHandle.post(BaseUrl + Const.API.CreateCustomerAgent, params).then(
-      res => {
-        if (res.ok) {
-          console.log('ressssssXXXXXXXX', res);
-          if (!res.data._ERROR_MESSAGE_ && !res.data._ERROR_MESSAGE_LIST_) {
-            SimpleToast.show(trans('createCustomersDone'), SimpleToast.SHORT);
-            setTimeout(() => {
-              navigation.navigate('createOrder');
-            }, 500);
-          } else {
-            setErrMessage(res.data._ERROR_MESSAGE_ || trans('errorOccurred'));
-            setModalError(true);
-          }
-        }
-      },
-    );
+    ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
+      if (res.ok) {
+        Toast.show({
+          type: 'success',
+          text1: 'Tạo đơn hàng thành công 👋',
+          visibilityTime: 2000,
+        });
+        navigation.goBack();
+      } else {
+        SimpleToast.show(res.error, SimpleToast.SHORT);
+      }
+    });
   };
 
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
-      style={styles.container}>
+      style={styles.container}
+      nestedScrollEnabled={true}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('addCustomer')} />
@@ -241,13 +267,11 @@ const AddCustomer = ({navigation}) => {
         />
         <Dropdown
           title={trans('gender')}
-          items={[
-            {label: trans('Male'), value: 'M'},
-            {label: trans('Female'), value: 'F'},
-          ]}
+          items={listGender}
           value={gender}
-          onChangeItem={item => setGender(item.value)}
-          defaultValue="M"
+          setValue={setGender}
+          setItems={setListGender}
+          listMode="SCROLLVIEW"
         />
         <FormInput
           title={trans('dateOfBirth')}
@@ -276,7 +300,7 @@ const AddCustomer = ({navigation}) => {
         />
         <FormInput
           goToMap={() =>
-            navigation.navigate('MapScreen', {
+            navigation.navigate(NAVIGATION_NAME.MapScreen, {
               address: address?.formatted_address,
             })
           }
@@ -295,9 +319,10 @@ const AddCustomer = ({navigation}) => {
         <Dropdown
           title={trans('route')}
           items={listRoute}
+          setItems={setListRoute}
           value={rule}
-          onChangeItem={item => setRule(item.value)}
-          defaultValue={listRoute[0]?.value}
+          setValue={setRule}
+          listMode="SCROLLVIEW"
         />
 
         <FormInput

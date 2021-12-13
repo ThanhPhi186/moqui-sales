@@ -88,7 +88,7 @@ const App = () => {
             ) : ( */}
             <MainNavigator />
             {/* )} */}
-            {/* <Toast ref={ref => Toast.setRef(ref)} /> */}
+            <Toast ref={ref => Toast.setRef(ref)} />
           </RootView>
         </PersistGate>
       </PaperProvider>

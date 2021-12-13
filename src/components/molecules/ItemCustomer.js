@@ -38,9 +38,9 @@ const ItemCustomer = props => {
           {type === 'check-status' && (
             <View style={styles.viewStatus}>
               <AppText style={styles.status}>
-                {(item.status === 'NOT_VISITED'
+                {(item.checkInOk === 'N' && item.checkOutOk === 'N'
                   ? trans('notVisited')
-                  : item.status === 'VISITING'
+                  : item.checkInOk === 'Y'
                   ? trans('comming')
                   : trans('visited')
                 ).toUpperCase()}
@@ -48,9 +48,9 @@ const ItemCustomer = props => {
 
               <MaterialCommunityIcons
                 name={
-                  item.status === 'NOT_VISITED'
+                  item.checkInOk === 'N' && item.checkOutOk === 'N'
                     ? 'cart-plus'
-                    : item.status === 'VISITING'
+                    : item.checkInOk === 'Y'
                     ? 'map-marker'
                     : 'check'
                 }
@@ -72,9 +72,7 @@ const ItemCustomer = props => {
                 mode="text"
                 labelStyle={styles.txtBtn}
                 onPress={checkInAndCheckOut}>
-                {item.status === 'NOT_VISITED'
-                  ? trans('checkin')
-                  : trans('checkout')}
+                {item.checkInOk === 'N' ? trans('checkin') : trans('checkout')}
               </Button>
             )}
             {/* <Button

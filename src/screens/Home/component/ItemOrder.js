@@ -12,7 +12,7 @@ const ItemOrder = props => {
 
   const renderColorStatus = status => {
     switch (status) {
-      case 'ORDER_APPROVED':
+      case 'OrderBeingChanged':
         return Colors.BLUE_CODE.blue600;
       case 'ORDER_CANCELLED':
         return Colors.RED_CODE.red500;

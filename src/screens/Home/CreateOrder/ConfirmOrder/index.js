@@ -12,24 +12,24 @@ import SimpleToast from 'react-native-simple-toast';
 import Toast from 'react-native-toast-message';
 
 const ConfirmOrder = ({navigation, route}) => {
-  const {dataCart} = route.params;
-  const {params} = route.params;
+  const {listChooseProduct} = route.params;
+  const {orderId} = route.params;
   const [orderValue, setOrderValue] = useState();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    ServiceHandle.post(Const.API.CalculatePOMobilemcs, params).then(res => {
-      if (res.ok) {
-        setOrderValue(res.data);
-      } else {
-        SimpleToast.show(res.error, SimpleToast.SHORT);
-      }
-    });
-  }, [params]);
+  // useEffect(() => {
+  //   ServiceHandle.post(Const.API.CalculatePOMobilemcs, params).then(res => {
+  //     if (res.ok) {
+  //       setOrderValue(res.data);
+  //     } else {
+  //       SimpleToast.show(res.error, SimpleToast.SHORT);
+  //     }
+  //   });
+  // }, [params]);
 
   const submitOrder = () => {
     setLoading(true);
-    ServiceHandle.post(Const.API.CreateOrderPurchaseMobilemcs, params)
+    ServiceHandle.post(Const.API.SubmitOrder, {orderId})
       .then(res => {
         if (res.ok) {
           Toast.show({
@@ -61,7 +61,7 @@ const ConfirmOrder = ({navigation, route}) => {
       <View style={styles.contentContainer}>
         <View style={styles.containerOrder}>
           <FlatList
-            data={dataCart}
+            data={listChooseProduct}
             renderItem={({item}) => renderItem(item)}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}

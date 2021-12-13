@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {AppText} from '../atoms';
 import {Colors, Mixin} from '../../styles';
@@ -13,6 +13,8 @@ import {FONT_SIZE_14} from '../../styles/Typography';
 
 // const defaultValue = [{label: 'Chọn giá trị', value: -1}];
 const AppDropDown = props => {
+  const [open, setOpen] = useState(false);
+
   // const [value, setValue] = useState(props.value || '');
   // const [data, setData] = useState();
   // const onChangeItems = item => {
@@ -36,6 +38,8 @@ const AppDropDown = props => {
       <DropDownPicker
         {...props}
         // searchable
+        open={open}
+        setOpen={setOpen}
         arrowSize={20}
         arrowColor="#90A1B5"
         placeholderStyle={styles.placeholderStyle}

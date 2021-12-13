@@ -15,6 +15,8 @@ export const handleStatus = status => {
       return 'Completed';
     case 'OrderHold': // Giữ đơn
       return 'Hold';
+    case 'OrderBeingChanged': // Giữ đơn
+      return 'Being Changed';
   }
 };
 

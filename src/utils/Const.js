@@ -17,6 +17,9 @@ export default {
     GetSalesOrderDetails: '/rest/s1/salesnet/mGetSalesOrderDetails',
     GetCustomerRegistration: '/rest/s1/salesnet/mGetCustomerRegistration',
     CreateCustomerAgent: '/rest/s1/salesnet/createCustomerAgent',
+    CreateOrder: '/rest/s1/salesnet/createOrder',
+    SubmitOrder: '/rest/s1/salesnet/submitOrder',
+    GetAllRoute: '/rest/s1/salesnet/getAllRoute',
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',
     GetAllProductStores: '/mGetAllProductStores',

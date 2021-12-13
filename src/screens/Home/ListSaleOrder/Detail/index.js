@@ -64,12 +64,14 @@ const OrderDetailScreen = ({navigation, route}) => {
       <View style={styles.content}>
         <ItemInfo
           title={trans('customerCode')}
-          value={dataDetail?.customer.partyId}
+          value={dataDetail?.customer?.partyId}
         />
         <ItemInfo
           title={trans('customerName')}
           value={
-            dataDetail?.customer.firstName + ' ' + dataDetail?.customer.lastName
+            dataDetail?.customer?.firstName +
+            ' ' +
+            dataDetail?.customer?.lastName
           }
         />
         <ItemInfo title={trans('codeOrder')} value={dataDetail?.orderId} />

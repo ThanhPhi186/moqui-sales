@@ -18,6 +18,7 @@ import {
 } from '../../../../components/molecules';
 import {AppLoading} from '../../../../components/atoms';
 import hasLocationPermission from '../../../../helpers/LocationHelper';
+import {NAVIGATION_NAME} from '../../../../navigations';
 
 const SelectProduct = ({navigation, route}) => {
   const [listChooseProduct, setListChooseProduct] = useState([]);
@@ -47,10 +48,24 @@ const SelectProduct = ({navigation, route}) => {
 
   console.log('customer', customer, store);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const params = {
+  //     documentType: 'MantleProduct',
+  //     queryString: searchString,
+  //   };
+  //   ServiceHandle.get(Const.API.QuickSearch, params).then(res => {
+  //     if (res.ok) {
+  //       setListProduct(res.data.documentList);
+  //     } else {
+  //       SimpleToast.show(res.error, SimpleToast.SHORT);
+  //     }
+  //   });
+  // }, [searchString]);
+
+  const searchProduct = txt => {
     const params = {
       documentType: 'MantleProduct',
-      queryString: searchString,
+      queryString: txt,
     };
     ServiceHandle.get(Const.API.QuickSearch, params).then(res => {
       if (res.ok) {
@@ -59,7 +74,7 @@ const SelectProduct = ({navigation, route}) => {
         SimpleToast.show(res.error, SimpleToast.SHORT);
       }
     });
-  }, [searchString]);
+  };
 
   const onSwipeValueChange = swipeData => {
     const {key, value} = swipeData;
@@ -87,7 +102,10 @@ const SelectProduct = ({navigation, route}) => {
         .includes(item.productId)
     ) {
       const newList = [...listChooseProduct];
-      newList.push({...item, ...{quantity: 1}});
+      newList.push({
+        ...item,
+        ...{quantity: 1, orderItemSeqId: newList.length + 1},
+      });
       setListChooseProduct(newList);
     }
   };
@@ -112,21 +130,34 @@ const SelectProduct = ({navigation, route}) => {
     });
 
     const products = convertList?.map(elm => {
+      console.log('elm', elm);
       return {
+        productName: elm.name,
         productId: elm.productId,
-        quantityUomId: elm.uomId,
+        orderItemSeqId: elm.orderItemSeqId,
         quantity: elm.quantity,
+        unitAmount: 10000,
       };
     });
-    const params = {
-      productStoreId: store.productStoreId,
-      customerId: customer.partyIdTo,
-      products: JSON.stringify(products),
-    };
+
     if (convertList.length > 0) {
-      navigation.navigate('ConfirmOrder', {
-        listChooseProduct: convertList,
-        params,
+      const params = {
+        productStoreId: store.productStoreId,
+        customerPartyId: customer.partyId,
+        orderItems: products,
+      };
+
+      ServiceHandle.post(Const.API.CreateOrder, params).then(res => {
+        if (res.ok) {
+          navigation.navigate(NAVIGATION_NAME.ConfirmOrder, {
+            listChooseProduct: convertList,
+            orderId: res.data.orderId,
+          });
+        } else {
+          setTimeout(() => {
+            SimpleToast.show(res.error, SimpleToast.SHORT);
+          }, 700);
+        }
       });
     } else {
       setVisibleDialog(true);
@@ -357,25 +388,24 @@ const SelectProduct = ({navigation, route}) => {
         <SearchProductComponent
           data={listProduct}
           selectProduct={chooseProduct}
-          onChangeText={setSearchString}
+          onChangeText={searchProduct}
         />
       </TouchableWithoutFeedback>
 
-      {/* <ItemCustomer
+      <ItemCustomer
         item={customer}
         containerStyle={styles.viewStore}
         disabled
-        type={
-          (listCustomer.filter(elm => elm.status === 'VISITING').length === 0 ||
-            customer.status === 'VISITING') &&
-          'create-order'
-        }
-        checkInAndCheckOut={
-          customer.status === 'NOT_VISITED' ? checkIn : checkOut
-        }
+        // type={
+        //   (listCustomer.filter(elm => elm.status === 'VISITING').length === 0 ||
+        //     customer.status === 'VISITING') &&
+        //   'create-order'
+        // }
+        type="create-order"
+        checkInAndCheckOut={customer.checkInOk === 'N' ? checkIn : checkOut}
         onInventory={onInventory}
         onNearDate={onRecentDate}
-      /> */}
+      />
 
       <SwipeListView
         disableRightSwipe
