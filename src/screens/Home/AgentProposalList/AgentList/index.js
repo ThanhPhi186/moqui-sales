@@ -3,6 +3,7 @@ import {FlatList, RefreshControl, View} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import SimpleToast from 'react-native-simple-toast';
 import {useDispatch, useSelector} from 'react-redux';
+import {NAVIGATION_NAME} from '../../../../navigations';
 import {ServiceHandle} from '../../../../services';
 import {Const, trans} from '../../../../utils';
 import ItemAgent from '../Component/ItemAgent';
@@ -40,7 +41,9 @@ const AgentList = ({navigation}) => {
     return (
       <ItemAgent
         item={item}
-        onPress={() => navigation.navigate('agentDetail', {data: item})}
+        onPress={() =>
+          navigation.navigate(NAVIGATION_NAME.AgentDetail, {data: item})
+        }
       />
     );
   };

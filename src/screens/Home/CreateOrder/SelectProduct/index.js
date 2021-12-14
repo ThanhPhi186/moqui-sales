@@ -19,6 +19,7 @@ import {
 import {AppLoading} from '../../../../components/atoms';
 import hasLocationPermission from '../../../../helpers/LocationHelper';
 import {NAVIGATION_NAME} from '../../../../navigations';
+import Toast from 'react-native-toast-message';
 
 const SelectProduct = ({navigation, route}) => {
   const [listChooseProduct, setListChooseProduct] = useState([]);
@@ -46,7 +47,7 @@ const SelectProduct = ({navigation, route}) => {
   });
   // const listCustomer = useSelector(state => state.CustomerReducer.listCustomer);
 
-  console.log('customer', customer, store);
+  console.log('customer', customer);
 
   // useEffect(() => {
   //   const params = {
@@ -218,51 +219,67 @@ const SelectProduct = ({navigation, route}) => {
   // };
 
   const checkIn = async () => {
-    const locationPermission = await hasLocationPermission();
-    if (!locationPermission) {
-      return;
-    }
-    Geolocation.getCurrentPosition(
-      position => {
-        setLoading(true);
-        const params = {
-          customerId: customer.partyIdTo,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        };
-        ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {
-          if (res.ok) {
-            if (res.data.checkInOk) {
-              setLoading(false);
+    setLoading(true);
+    try {
+      const locationPermission = await hasLocationPermission();
+      console.log('locationPermission', locationPermission);
+      if (!locationPermission) {
+        return;
+      }
+      Geolocation.getCurrentPosition(
+        position => {
+          const params = {
+            customerId: customer.partyId,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            // latitude: 20.9934524,
+            // longitude: 105.7865343,
+          };
+
+          ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {
+            if (res.ok) {
               // dispatch(CustomerRedux.Actions.checkIn(customer.partyIdTo));
-              navigation.setParams({item: {...customer, status: 'VISITING'}});
-              SimpleToast.show(trans('checkInDone'), SimpleToast.SHORT);
+              // navigation.setParams({item: {...customer, status: 'VISITING'}});
+              Toast.show({
+                type: 'success',
+                text1: trans('checkInDone'),
+                visibilityTime: 2000,
+              });
             } else {
-              setLoading(false);
+              // setLoading(false);
+              // setTimeout(() => {
+              //   setErrMess(res.data.message);
+              //   setModalErr(true);
+              // }, 1000);
               setTimeout(() => {
-                setErrMess(res.data.message);
-                setModalErr(true);
-              }, 1000);
+                SimpleToast.show(res.error, SimpleToast.SHORT);
+              }, 700);
             }
-          }
-        });
-      },
-      error => {
-        console.log('error', error);
-      },
-      {
-        accuracy: {
-          android: 'high',
-          ios: 'best',
+          });
         },
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-        distanceFilter: 0,
-        forceRequestLocation: true,
-        showLocationDialog: true,
-      },
-    );
+        error => {
+          console.log('error', error);
+        },
+        {
+          accuracy: {
+            android: 'high',
+            ios: 'best',
+          },
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 10000,
+          distanceFilter: 0,
+          forceRequestLocation: true,
+          showLocationDialog: true,
+        },
+      );
+    } catch (error) {
+      setTimeout(() => {
+        SimpleToast.show(error, SimpleToast.SHORT);
+      }, 700);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // const checkOutxx = () => {

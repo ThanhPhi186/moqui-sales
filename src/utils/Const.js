@@ -20,6 +20,9 @@ export default {
     CreateOrder: '/rest/s1/salesnet/createOrder',
     SubmitOrder: '/rest/s1/salesnet/submitOrder',
     GetAllRoute: '/rest/s1/salesnet/getAllRoute',
+    SalesmanCheckIn: '/rest/s1/salesnet/salesmanCheckIn',
+    SalesmanCheckOut: '/rest/s1/salesnet/salesmanCheckOut',
+
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',
     GetAllProductStores: '/mGetAllProductStores',

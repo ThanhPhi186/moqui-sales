@@ -25,9 +25,9 @@ const AgentDetail = ({navigation, route}) => {
           resizeMode="contain"
         />
         <AppText style={styles.status}>
-          {data.statusId === 'PARTY_APPROVED'
-            ? trans('approved')
-            : trans('unApproved')}
+          {data.statusId === 'PARTY_CREATED'
+            ? trans('unApproved')
+            : trans('approved')}
         </AppText>
         <ItemInfo title={trans('customerName')} value={data.customerName} />
         <ItemInfo title={trans('customerCode')} value={data.customerId} />

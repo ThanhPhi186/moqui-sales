@@ -133,7 +133,7 @@ const MapScreen = ({navigation, route}) => {
             }}
             query={{
               key: Const.GOOGLE_MAP_API,
-              language: 'en',
+              language: 'vi',
             }}
             // currentLocation={true}
             // predefinedPlaces={[homePlace, workPlace]}

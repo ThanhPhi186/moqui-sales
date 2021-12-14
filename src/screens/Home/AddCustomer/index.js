@@ -40,6 +40,8 @@ const AddCustomer = ({navigation}) => {
   const [errMessage, setErrMessage] = useState('');
   const [modalError, setModalError] = useState(false);
   const [address, setAddress] = useState();
+  const [addressWard, setAddressWard] = useState();
+
   const [addressDetail, setAddressDetail] = useState([]);
 
   const location = useSelector(state => state.AuthenOverallReducer.location);
@@ -83,6 +85,16 @@ const AddCustomer = ({navigation}) => {
           setAddressDetail(
             res.results[0].address_components.filter(
               elm => elm.types.length > 1,
+            ),
+          );
+
+          const addressWard = res.results[0].address_components
+            .filter(elm => elm.types.length === 1)
+            .map(elm => elm.long_name);
+
+          setAddressWard(
+            res.results[0].address_components.filter(
+              elm => elm.types.length === 1,
             ),
           );
         })
@@ -168,7 +180,10 @@ const AddCustomer = ({navigation}) => {
     return false;
   };
 
-  console.log('addressDetail', address);
+  console.log(
+    'location.latitude',
+    location.latitude.toString().replace('.', ','),
+  );
 
   const createCustomer = () => {
     if (handelCheckValue()) {
@@ -198,25 +213,26 @@ const AddCustomer = ({navigation}) => {
       gender, //done
       officeSiteName: storeName, //done
       telecomNumber: phoneNumber, //done
-      tarAddress: address.formatted_address, //done
+      tarAddress: addressWard[0].long_name + ' ' + addressWard[1].long_name, //done
       latitude: location.latitude, //done
       longitude: location.longitude, //done
       routeId: rule, //done
-      birthDay: new Date(moment(dateOfBirth, 'DD/MM/YYYY').unix() * 1000),
-      startDate: new Date(moment(startDate, 'DD/MM/YYYY').unix() * 1000),
+      // birthDay: new Date(moment(dateOfBirth, 'DD/MM/YYYY').unix() * 1000),
+      // startDate: new Date(moment(startDate, 'DD/MM/YYYY').unix() * 1000),
       note,
       productStoreId: productStoreId, //done
+      wardName: 'Khương Trung', //done
       districtName: addressDetail[0].long_name, //done
       stateProvinceGeoName: addressDetail[1].long_name, // done
-      countryGeoName: addressDetail[2].long_name, //done
-      wardName: addressDetail[2].long_name, //done
+      // countryGeoName: addressDetail[2].long_name, //done
+      countryGeoName: 'Việt Nam',
     };
-    console.log('paraamsssss', params);
+    console.log('params', params);
     ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
       if (res.ok) {
         Toast.show({
           type: 'success',
-          text1: 'Tạo đơn hàng thành công 👋',
+          text1: 'Thêm mới khach hàng thành công 👋',
           visibilityTime: 2000,
         });
         navigation.goBack();

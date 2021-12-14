@@ -31,7 +31,7 @@ const ItemCustomer = props => {
       />
       <View style={styles.leftContent}>
         <AppText style={styles.officeSiteName}>{item.officeSiteName}</AppText>
-        <AppText style={styles.txtContent}>{item.postalAddress}</AppText>
+        <AppText style={styles.txtContent}>{item.fullAddress}</AppText>
         <View style={styles.viewRow}>
           <AppText>{item.telecomNumber}</AppText>
 
