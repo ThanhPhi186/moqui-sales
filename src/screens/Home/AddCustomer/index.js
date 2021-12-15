@@ -221,7 +221,7 @@ const AddCustomer = ({navigation}) => {
       // startDate: new Date(moment(startDate, 'DD/MM/YYYY').unix() * 1000),
       note,
       productStoreId: productStoreId, //done
-      wardName: 'Khương Trung', //done
+      // wardName: 'Khương Trung', //done
       districtName: addressDetail[0].long_name, //done
       stateProvinceGeoName: addressDetail[1].long_name, // done
       // countryGeoName: addressDetail[2].long_name, //done

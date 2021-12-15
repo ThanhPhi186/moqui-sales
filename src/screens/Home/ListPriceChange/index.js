@@ -22,19 +22,20 @@ const ListPriceChange = ({navigation}) => {
 
   const [loading, setLoading] = useState(false);
 
+  console.log('store', store);
+
   useEffect(() => {
     const getListPriceChange = () => {
       setLoading(true);
       const params = {
         productStoreId: store.productStoreId,
-        fromDateStr: moment(startDate, 'DD/MM/YYYY').unix() * 1000,
-        thruDateStr: moment(endDate, 'DD/MM/YYYY').unix() * 1000,
+        fromDate: moment(startDate, 'DD/MM/YYYY').unix() * 1000,
+        thruDate: moment(endDate, 'DD/MM/YYYY').unix() * 1000,
         viewIndex: 0,
         viewSize: 50,
       };
-      ServiceHandle.post(Const.API.GetListPriceChangeMobilemcs, params)
+      ServiceHandle.get(Const.API.GetListPriceChange, params)
         .then(res => {
-          console.log('ress', res);
           if (res.ok) {
             setListPriceChange(res.data.listProPriceChanges);
           } else {

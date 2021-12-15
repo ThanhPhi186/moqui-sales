@@ -26,6 +26,8 @@ import {
   AgentDetail,
   AgentList,
   AddCustomer,
+  RecentDate,
+  Inventory,
 } from './Home';
 import {MainAccount, ChangePassword, ChangeStore} from './Account';
 import ContactScreen from './ContactScreen';
@@ -68,4 +70,6 @@ export {
   AgentList,
   AddCustomer,
   MapScreen,
+  RecentDate,
+  Inventory,
 };

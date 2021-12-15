@@ -9,7 +9,12 @@ import {
 } from './PricePolicy';
 import CancelOrderStatistic from './CancelOrderStatistic';
 import CashierLoginHistory from './CashierLoginHistory';
-import {ConfirmOrder, SelectProduct} from './CreateOrder';
+import {
+  ConfirmOrder,
+  SelectProduct,
+  RecentDate,
+  Inventory,
+} from './CreateOrder';
 import {
   ListInventoryPeriod,
   DetailInventoryPeriod,
@@ -48,4 +53,6 @@ export {
   AgentDetail,
   AgentList,
   AddCustomer,
+  RecentDate,
+  Inventory,
 };

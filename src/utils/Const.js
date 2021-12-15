@@ -22,6 +22,12 @@ export default {
     GetAllRoute: '/rest/s1/salesnet/getAllRoute',
     SalesmanCheckIn: '/rest/s1/salesnet/salesmanCheckIn',
     SalesmanCheckOut: '/rest/s1/salesnet/salesmanCheckOut',
+    GetListPriceChange: '/rest/s1/salesnet/mGetListPriceChange',
+    SearchProduct: '/rest/s1/salesnet/searchProduct',
+    GetListProductExpRecent: '/rest/s1/salesnet/mGetListProductExpRecent',
+    UpdateQtyProductExpInvent: '/rest/s1/salesnet/mUpdateQtyProductExpInvent',
+    GetInventoryCusInfo: '/rest/s1/salesnet/getInventoryCusInfo',
+    UpdateInventoryCus: '/rest/s1/salesnet/updateInventoryCus',
 
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',

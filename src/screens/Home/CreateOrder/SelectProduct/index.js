@@ -67,10 +67,11 @@ const SelectProduct = ({navigation, route}) => {
     const params = {
       documentType: 'MantleProduct',
       queryString: txt,
+      productStoreId: store.productStoreId,
     };
-    ServiceHandle.get(Const.API.QuickSearch, params).then(res => {
+    ServiceHandle.get(Const.API.SearchProduct, params).then(res => {
       if (res.ok) {
-        setListProduct(res.data.documentList);
+        setListProduct(res.data.products);
       } else {
         SimpleToast.show(res.error, SimpleToast.SHORT);
       }
@@ -131,13 +132,12 @@ const SelectProduct = ({navigation, route}) => {
     });
 
     const products = convertList?.map(elm => {
-      console.log('elm', elm);
       return {
         productName: elm.name,
         productId: elm.productId,
         orderItemSeqId: elm.orderItemSeqId,
         quantity: elm.quantity,
-        unitAmount: 10000,
+        unitAmount: elm.priceOut.price,
       };
     });
 
@@ -230,21 +230,27 @@ const SelectProduct = ({navigation, route}) => {
         position => {
           const params = {
             customerId: customer.partyId,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            // latitude: 20.9934524,
-            // longitude: 105.7865343,
+            // latitude: position.coords.latitude,
+            // longitude: position.coords.longitude,
+            latitude: 20.9934524,
+            longitude: 105.7865343,
           };
 
           ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {
             if (res.ok) {
-              // dispatch(CustomerRedux.Actions.checkIn(customer.partyIdTo));
-              // navigation.setParams({item: {...customer, status: 'VISITING'}});
-              Toast.show({
-                type: 'success',
-                text1: trans('checkInDone'),
-                visibilityTime: 2000,
-              });
+              if (res.data.checkInOk === 'Y') {
+                // dispatch(CustomerRedux.Actions.checkIn(customer.partyIdTo));
+                navigation.setParams({item: {...customer, checkInOk: 'Y'}});
+                Toast.show({
+                  type: 'success',
+                  text1: trans('checkInDone'),
+                  visibilityTime: 2000,
+                });
+              } else {
+                setTimeout(() => {
+                  SimpleToast.show(res.data.message, SimpleToast.SHORT);
+                }, 700);
+              }
             } else {
               // setLoading(false);
               // setTimeout(() => {
@@ -338,22 +344,22 @@ const SelectProduct = ({navigation, route}) => {
   };
 
   const onInventory = () => {
-    if (customer.status === 'NOT_VISITED') {
+    if (customer.checkInOk === 'N') {
       setErrMess(trans('notCheckIn'));
       setModalErr(true);
     } else {
-      navigation.navigate('Inventory', {
+      navigation.navigate(NAVIGATION_NAME.Inventory, {
         item: customer,
       });
     }
   };
 
   const onRecentDate = () => {
-    if (customer.status === 'NOT_VISITED') {
+    if (customer.checkInOk === 'N') {
       setErrMess(trans('notCheckIn'));
       setModalErr(true);
     } else {
-      navigation.navigate('RecentDate', {
+      navigation.navigate(NAVIGATION_NAME.RecentDate, {
         item: customer,
       });
     }

@@ -35,6 +35,8 @@ const NAVIGATION_NAME = {
   AgentList: 'AgentList',
   AddCustomer: 'AddCustomer',
   MapScreen: 'MapScreen',
+  RecentDate: 'RecentDate',
+  Inventory: 'Inventory',
 };
 
 export default NAVIGATION_NAME;

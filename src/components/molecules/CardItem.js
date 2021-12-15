@@ -40,7 +40,7 @@ const CardItem = props => {
         />
       </View>
       <View style={styles.leftContent}>
-        <AppText style={styles.nameProduct}>{item.name}</AppText>
+        <AppText style={styles.nameProduct}>{item.productName}</AppText>
         <AppText style={styles.info}>
           {item.productId}{' '}
           {(item.uomId || item.abbreviation) &&
@@ -66,7 +66,9 @@ const CardItem = props => {
             </TouchableOpacity>
             <TextInput
               style={styles.boxAmount}
-              value={item.quantity.toString()}
+              value={
+                item?.quantity?.toString() || item.qtyExpInventory.toString()
+              }
               keyboardType="number-pad"
               onChangeText={valueInput => changeQuantityProps(valueInput, item)}
             />

@@ -75,13 +75,13 @@ const ItemCustomer = props => {
                 {item.checkInOk === 'N' ? trans('checkin') : trans('checkout')}
               </Button>
             )}
-            {/* <Button
+            <Button
               icon="store"
               mode="text"
               labelStyle={styles.txtBtn}
               onPress={onInventory}>
               {trans('inventory')}
-            </Button> */}
+            </Button>
           </View>
         )}
       </View>

@@ -33,6 +33,8 @@ import {
   AgentDetail,
   AddCustomer,
   MapScreen,
+  RecentDate,
+  Inventory,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CustomButtonTab} from '../components/molecules';
@@ -78,7 +80,9 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.AgentList ||
       routeName === NAVIGATION_NAME.AgentDetail ||
       routeName === NAVIGATION_NAME.AddCustomer ||
-      routeName === NAVIGATION_NAME.MapScreen
+      routeName === NAVIGATION_NAME.MapScreen ||
+      routeName === NAVIGATION_NAME.RecentDate ||
+      routeName === NAVIGATION_NAME.Inventory
     ) {
       return false;
     }
@@ -204,6 +208,11 @@ const BottomTabNavigator = () => {
           component={AddCustomer}
         />
         <Stack.Screen name={NAVIGATION_NAME.MapScreen} component={MapScreen} />
+        <Stack.Screen
+          name={NAVIGATION_NAME.RecentDate}
+          component={RecentDate}
+        />
+        <Stack.Screen name={NAVIGATION_NAME.Inventory} component={Inventory} />
       </Stack.Navigator>
     );
   };
