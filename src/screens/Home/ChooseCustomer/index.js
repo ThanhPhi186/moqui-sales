@@ -14,6 +14,7 @@ import {ServiceHandle} from '../../../services';
 import SimpleToast from 'react-native-simple-toast';
 import {ItemCustomer} from '../../../components/molecules';
 import {NAVIGATION_NAME} from '../../../navigations';
+import {AppLoading} from '../../../components/atoms';
 
 const initialLayout = {width: Mixin.device_width};
 
@@ -33,24 +34,35 @@ const ChooseCustomer = ({navigation, route}) => {
 
   const [listInLine, setListInLine] = useState([]);
   const [listLeftLine, setListLeftLine] = useState([]);
-  const loading = useState(false);
   const [dataInline, setDataInline] = useState();
   const [dataLeftLine, setDataLeftLine] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getCustomer();
   }, []);
 
   const getCustomer = async () => {
-    const params = {productStoreId: store.productStoreId};
-    const response = await ServiceHandle.get(Const.API.GetCustomers, params);
-    if (response.ok) {
-      setDataInline(response.data.inRoute.customers);
-      setListInLine(response.data.inRoute.customers);
-      setDataLeftLine(response.data.outRoute.customers);
-      setListLeftLine(response.data.outRoute.customers);
-    } else {
-      SimpleToast.show(response.error, SimpleToast.SHORT);
+    setLoading(true);
+    try {
+      const params = {productStoreId: store.productStoreId};
+      const response = await ServiceHandle.get(Const.API.GetCustomers, params);
+      if (response.ok) {
+        setDataInline(response.data.inRoute.customers);
+        setListInLine(response.data.inRoute.customers);
+        setDataLeftLine(response.data.outRoute.customers);
+        setListLeftLine(response.data.outRoute.customers);
+      } else {
+        setTimeout(() => {
+          SimpleToast.show(response.error, SimpleToast.SHORT);
+        }, 700);
+      }
+    } catch (error) {
+      setTimeout(() => {
+        SimpleToast.show(error, SimpleToast.SHORT);
+      }, 700);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,9 +162,9 @@ const ChooseCustomer = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
+      <AppLoading isVisible={loading} />
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-
         <Appbar.Content title={trans('chooseCustomer')} />
       </Appbar.Header>
       <View style={styles.containerSearch}>

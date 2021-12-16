@@ -23,6 +23,7 @@ const Inventory = ({navigation, route}) => {
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [errMess, setErrMess] = useState('');
   const [modalErr, setModalErr] = useState(false);
+  const [loading, setLoading] = useState(false);
   const customer = route.params.item;
 
   const animationIsRunning = useRef(false);
@@ -30,24 +31,41 @@ const Inventory = ({navigation, route}) => {
   listChooseProduct.map(elm => {
     rowTranslateAnimatedValues[elm.distinctId] = new Animated.Value(1);
   });
-  // const listCustomer = useSelector(
-  //   (state) => state.CustomerReducer.listCustomer,
-  // );
+
+  const store = useSelector(state => state.StoreReducer.store);
   console.log('listproduct', listChooseProduct);
 
   useEffect(() => {
     const getInventory = () => {
-      const params = {party_id: customer.partyId};
-      ServiceHandle.post(Const.API.GetInventoryCusInfo, params).then(res => {
-        if (res.ok) {
-          setListChooseProduct(res.data.inventoryCusInfo);
-        } else {
-          SimpleToast.show(res.error, SimpleToast.SHORT);
-        }
-      });
+      setLoading(true);
+      const params = {partyId: customer.partyId};
+      ServiceHandle.get(Const.API.GetInventoryCusInfo, params)
+        .then(res => {
+          if (res.ok) {
+            setListChooseProduct(res.data.inventoryCustInfo);
+          } else {
+            SimpleToast.show(res.error, SimpleToast.SHORT);
+          }
+        })
+        .finally(() => setLoading(false));
     };
     getInventory();
   }, [customer.partyId]);
+
+  const searchProduct = txt => {
+    const params = {
+      documentType: 'MantleProduct',
+      queryString: txt,
+      productStoreId: store.productStoreId,
+    };
+    ServiceHandle.get(Const.API.SearchProduct, params).then(res => {
+      if (res.ok) {
+        setListProduct(res.data.products);
+      } else {
+        SimpleToast.show(res.error, SimpleToast.SHORT);
+      }
+    });
+  };
 
   const onSwipeValueChange = swipeData => {
     const {key, value} = swipeData;
@@ -192,8 +210,9 @@ const Inventory = ({navigation, route}) => {
       </Appbar.Header>
 
       <SearchProductComponent
-        data={listProductSelector}
+        data={listProduct}
         selectProduct={chooseProduct}
+        onChangeText={searchProduct}
       />
 
       <ItemCustomer

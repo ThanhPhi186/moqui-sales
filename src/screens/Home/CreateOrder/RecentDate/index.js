@@ -47,8 +47,8 @@ const RecentDate = ({navigation, route}) => {
   console.log('listChooseProduct', listChooseProduct, itemClick);
 
   useEffect(() => {
-    setLoading(true);
     const getListExpRecent = () => {
+      setLoading(true);
       const params = {customerId: customer.partyId, pageIndex: 0, pageSize: 50};
       ServiceHandle.get(Const.API.GetListProductExpRecent, params)
         .then(res => {

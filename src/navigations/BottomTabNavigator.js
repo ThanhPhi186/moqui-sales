@@ -305,7 +305,14 @@ const BottomTabNavigator = () => {
               });
             };
             if (index === 2) {
-              return <CustomButtonTab onPress={() => {}} key={index} />;
+              return (
+                <CustomButtonTab
+                  onPress={() =>
+                    navigation.navigate(NAVIGATION_NAME.ChooseCustomer)
+                  }
+                  key={index}
+                />
+              );
             }
 
             return (

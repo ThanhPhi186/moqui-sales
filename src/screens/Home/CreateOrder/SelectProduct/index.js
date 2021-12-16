@@ -222,7 +222,7 @@ const SelectProduct = ({navigation, route}) => {
     setLoading(true);
     try {
       const locationPermission = await hasLocationPermission();
-      console.log('locationPermission', locationPermission);
+
       if (!locationPermission) {
         return;
       }
