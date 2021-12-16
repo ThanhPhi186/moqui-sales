@@ -28,6 +28,8 @@ export default {
     UpdateQtyProductExpInvent: '/rest/s1/salesnet/mUpdateQtyProductExpInvent',
     GetInventoryCusInfo: '/rest/s1/salesnet/getInventoryCusInfo',
     UpdateInventoryCus: '/rest/s1/salesnet/updateInventoryCus',
+    UpdatePasswordMobile: '/rest/s1/salesnet/mUpdatePasswordMobile',
+    GetLastOrderBeingChanged: '/rest/s1/salesnet/getLastOrderBeingChanged',
 
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',

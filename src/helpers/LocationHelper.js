@@ -54,6 +54,8 @@ const hasLocationPermission = async () => {
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
   );
 
+  console.log('status', status);
+
   if (status === PermissionsAndroid.RESULTS.GRANTED) {
     return true;
   }

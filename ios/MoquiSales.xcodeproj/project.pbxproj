@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8A336CAD276B2807005CB2A5 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A336CAC276B2807005CB2A5 /* BootSplash.storyboard */; };
 		D4EFA4C339BD991FA0304373 /* libPods-MoquiSales.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C8DB723CA6643255B92B95 /* libPods-MoquiSales.a */; };
 		E96B0B67AC20A6A00A17FAEE /* libPods-MoquiSales-MoquiSalesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E9B1DC3A1AF3495A7917AD7 /* libPods-MoquiSales-MoquiSalesTests.a */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		261B9E485438F0B35FEC4805 /* Pods-MoquiSales.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoquiSales.debug.xcconfig"; path = "Target Support Files/Pods-MoquiSales/Pods-MoquiSales.debug.xcconfig"; sourceTree = "<group>"; };
 		6A44C5981A790D53049A1446 /* Pods-MoquiSales-MoquiSalesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoquiSales-MoquiSalesTests.release.xcconfig"; path = "Target Support Files/Pods-MoquiSales-MoquiSalesTests/Pods-MoquiSales-MoquiSalesTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoquiSales/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A336CAC276B2807005CB2A5 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = MoquiSales/BootSplash.storyboard; sourceTree = "<group>"; };
 		8A520B89275486C20073D947 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		8A520B8A275486C20073D947 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		8A520B8B275486C20073D947 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				8A336CAC276B2807005CB2A5 /* BootSplash.storyboard */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -282,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A336CAD276B2807005CB2A5 /* BootSplash.storyboard in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

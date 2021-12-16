@@ -40,7 +40,7 @@ const ItemCustomer = props => {
               <AppText style={styles.status}>
                 {(item.checkInOk === 'N' && item.checkOutOk === 'N'
                   ? trans('notVisited')
-                  : item.checkInOk === 'Y'
+                  : item.checkInOk === 'Y' && item.checkOutOk === 'N'
                   ? trans('comming')
                   : trans('visited')
                 ).toUpperCase()}
@@ -50,7 +50,7 @@ const ItemCustomer = props => {
                 name={
                   item.checkInOk === 'N' && item.checkOutOk === 'N'
                     ? 'cart-plus'
-                    : item.checkInOk === 'Y'
+                    : item.checkInOk === 'Y' && item.checkOutOk === 'N'
                     ? 'map-marker'
                     : 'check'
                 }
@@ -66,15 +66,18 @@ const ItemCustomer = props => {
             <Button mode="text" onPress={onNearDate}>
               {trans('nearDate')}
             </Button>
-            {item.status !== 'VISITED' && (
-              <Button
-                icon="map-marker"
-                mode="text"
-                labelStyle={styles.txtBtn}
-                onPress={checkInAndCheckOut}>
-                {item.checkInOk === 'N' ? trans('checkin') : trans('checkout')}
-              </Button>
-            )}
+            {item.checkInOk !== 'Y' ||
+              (item.checkOutOk !== 'Y' && (
+                <Button
+                  icon="map-marker"
+                  mode="text"
+                  labelStyle={styles.txtBtn}
+                  onPress={checkInAndCheckOut}>
+                  {item.checkInOk === 'N'
+                    ? trans('checkin')
+                    : trans('checkout')}
+                </Button>
+              ))}
             <Button
               icon="store"
               mode="text"

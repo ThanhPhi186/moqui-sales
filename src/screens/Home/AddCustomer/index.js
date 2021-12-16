@@ -88,10 +88,6 @@ const AddCustomer = ({navigation}) => {
             ),
           );
 
-          const addressWard = res.results[0].address_components
-            .filter(elm => elm.types.length === 1)
-            .map(elm => elm.long_name);
-
           setAddressWard(
             res.results[0].address_components.filter(
               elm => elm.types.length === 1,
@@ -179,11 +175,6 @@ const AddCustomer = ({navigation}) => {
     }
     return false;
   };
-
-  console.log(
-    'location.latitude',
-    location.latitude.toString().replace('.', ','),
-  );
 
   const createCustomer = () => {
     if (handelCheckValue()) {

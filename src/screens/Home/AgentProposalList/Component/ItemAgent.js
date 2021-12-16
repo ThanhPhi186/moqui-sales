@@ -21,7 +21,7 @@ const ItemAgent = props => {
       />
       <View style={styles.leftContent}>
         <AppText style={styles.officeSiteName}>{item.officeSiteName}</AppText>
-        <AppText style={styles.txtContent}>{item.address}</AppText>
+        <AppText style={styles.txtContent}>{item.fullAddress}</AppText>
         {!!item.phone && (
           <AppText style={styles.txtContent}>{item.phone}</AppText>
         )}

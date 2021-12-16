@@ -10,68 +10,22 @@ import {container} from '../../../styles/GlobalStyles';
 import {Const, trans} from '../../../utils';
 import moment from 'moment';
 import numeral from 'numeral';
+import {FONT_SIZE_16} from '../../../styles/Typography';
 
 const CancelOrderStatistic = ({navigation}) => {
   const store = useSelector(state => state.StoreReducer.store);
-  const [cancelList, setCancelList] = useState([]);
+
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    const getListCancelOrder = () => {
-      const params = {
-        viewIndex: 0,
-        viewSize: 200,
-        productStoreId: store.productStoreId,
-      };
-      ServiceHandle.post(Const.API.GetListSalesTrackMobilemcs, params)
-        .then(res => {
-          if (res.ok) {
-            setCancelList(res.data.listSalesTrack);
-          } else {
-            setTimeout(() => {
-              SimpleToast.show(res.error, SimpleToast.SHORT);
-            }, 700);
-          }
-        })
-        .finally(() => setLoading(false));
-    };
-    getListCancelOrder();
-  }, [store.productStoreId]);
-
-  const renderItem = item => {
-    return (
-      <View style={styles.containerItem}>
-        <AppText style={styles.nameProduct}>
-          {item.createdByUserLogin} - {item.terminalId}
-        </AppText>
-        <AppText style={styles.txtInfo}>
-          {item.transactionId} -{' '}
-          {moment(item.createdDate, 'DD-MM-YYYY HH:mm:ss').format('DD-MM-YYYY')}
-        </AppText>
-        <AppText style={styles.txtInfo}>{item.productCode}</AppText>
-        <AppText style={styles.txtInfo}>{item.productName}</AppText>
-        <AppText style={styles.txtInfo}>
-          {item.quantity} - {item.quantityUomName} -{' '}
-          {numeral(item.unitPrice).format()} đ
-        </AppText>
-      </View>
-    );
-  };
 
   return (
     <View style={container}>
       <AppLoading isVisible={loading} />
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title={trans('CancelOrderStatistic')} />
+        <Appbar.Content title="Báo cáo cửa hàng" />
       </Appbar.Header>
       <View style={styles.contentContainer}>
-        <FlatList
-          data={cancelList}
-          renderItem={({item}) => renderItem(item)}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <AppText style={styles.txtEmpty}>Tính năng đang phát triển</AppText>
       </View>
     </View>
   );
@@ -102,5 +56,11 @@ const styles = {
   txtInfo: {
     fontStyle: 'italic',
     paddingTop: Mixin.moderateSize(8),
+  },
+  txtEmpty: {
+    color: Colors.GRAY,
+    fontSize: FONT_SIZE_16,
+    textAlign: 'center',
+    marginTop: Mixin.moderateSize(80),
   },
 };

@@ -1,3 +1,4 @@
+import {isIphoneX} from '../../../../helpers/iphoneXHelper';
 import {Colors} from '../../../../styles';
 
 const styles = {
@@ -42,6 +43,10 @@ const styles = {
     backgroundColor: Colors.WHITE_SMOKE,
     borderBottomWidth: 1,
     borderBottomColor: Colors.BLACK,
+  },
+  btnConfirm: {
+    alignSelf: 'center',
+    marginBottom: isIphoneX() ? 34 : 12,
   },
 };
 

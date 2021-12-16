@@ -80,19 +80,23 @@ const OrderDetailScreen = ({navigation, route}) => {
       <View style={styles.content}>
         <ItemInfo
           title={trans('orderValue')}
-          value={numeral(dataDetail?.subTotal).format()}
+          value={numeral(dataDetail?.grandTotal).format()}
+          price
         />
         <ItemInfo
           title={trans('discount')}
           value={dataDetail?.discountAmount}
+          price
         />
         <ItemInfo
           title={trans('tax')}
           value={numeral(dataDetail?.taxAmount).format()}
+          price
         />
         <ItemInfo
           title={trans('totalPayable')}
           value={numeral(dataDetail?.grandTotal).format()}
+          price
         />
       </View>
       <View style={[styles.content, {flex: 2}]}>

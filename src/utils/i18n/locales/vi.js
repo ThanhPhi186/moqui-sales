@@ -238,4 +238,6 @@ export default {
   myPromotion: 'Ưu đãi của tôi',
   emptyPromotion: 'Chưa có khuyến mãi nào',
   totalPayable: 'Tổng tiền phải trả',
+  notCustomer: 'Chưa có khách hàng',
+  updateInventory: 'Cập nhật tồn kho',
 };

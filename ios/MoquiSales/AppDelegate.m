@@ -4,6 +4,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "RNBootSplash.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -49,6 +50,9 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [GMSServices provideAPIKey:@"AIzaSyCHu4vQUKFsMnqpjk_HHjIIAU_yejvT5cs"];
+
+   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+   
   return YES;
 }
 

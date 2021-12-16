@@ -16,6 +16,7 @@ import {images} from '../../../assets';
 import {AppDialog} from '../../../components/molecules';
 import {NAVIGATION_NAME} from '../../../navigations';
 import {ServiceHandle} from '../../../services';
+import SimpleToast from 'react-native-simple-toast';
 
 const MainAccount = ({navigation}) => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const MainAccount = ({navigation}) => {
       <BannerBehind backGround={images.ic_Background} avatar={images.avatar} />
       <View style={styles.viewInfo}>
         <AppText title style={styles.txtName}>
-          Nguyễn Thành Phi
+          trangbq
         </AppText>
         <AppText style={styles.txtInfo}>{store.storeName}</AppText>
       </View>
@@ -75,7 +76,9 @@ const MainAccount = ({navigation}) => {
           <ItemAccount
             icon="home-import-outline"
             title={trans('companyChange')}
-            onPress={() => setModalChangeCompany(true)}
+            onPress={() =>
+              SimpleToast.show('Tính năng đang phát triển', SimpleToast.SHORT)
+            }
           />
           <View style={styles.smallIndicate} />
           <ItemAccount

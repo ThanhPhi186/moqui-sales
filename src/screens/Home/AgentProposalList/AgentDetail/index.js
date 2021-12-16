@@ -34,7 +34,7 @@ const AgentDetail = ({navigation, route}) => {
         <ItemInfo title={trans('phoneNumber')} phone={data.phone} />
         <ItemInfo title={trans('storeCode')} value={data.productStoreId} />
         <ItemInfo title={trans('storeName')} value={data.officeSiteName} />
-        <ItemInfo title={trans('address')} value={data.address} />
+        <ItemInfo title={trans('address')} value={data.fullAddress} />
       </View>
     </View>
   );

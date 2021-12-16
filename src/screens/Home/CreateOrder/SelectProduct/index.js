@@ -51,17 +51,16 @@ const SelectProduct = ({navigation, route}) => {
 
   // useEffect(() => {
   //   const params = {
-  //     documentType: 'MantleProduct',
-  //     queryString: searchString,
+  //     customerId: customer.partyId,
   //   };
-  //   ServiceHandle.get(Const.API.QuickSearch, params).then(res => {
+  //   ServiceHandle.get(Const.API.GetLastOrderBeingChanged, params).then(res => {
   //     if (res.ok) {
-  //       setListProduct(res.data.documentList);
+  //       // setListChooseProduct(res.data.orderDetail.orderItems);
   //     } else {
   //       SimpleToast.show(res.error, SimpleToast.SHORT);
   //     }
   //   });
-  // }, [searchString]);
+  // }, [customer.partyId]);
 
   const searchProduct = txt => {
     const params = {
@@ -230,10 +229,10 @@ const SelectProduct = ({navigation, route}) => {
         position => {
           const params = {
             customerId: customer.partyId,
-            // latitude: position.coords.latitude,
-            // longitude: position.coords.longitude,
-            latitude: 20.9934524,
-            longitude: 105.7865343,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            // latitude: 20.9897377,
+            // longitude: 105.8182346,
           };
 
           ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {
@@ -252,11 +251,6 @@ const SelectProduct = ({navigation, route}) => {
                 }, 700);
               }
             } else {
-              // setLoading(false);
-              // setTimeout(() => {
-              //   setErrMess(res.data.message);
-              //   setModalErr(true);
-              // }, 1000);
               setTimeout(() => {
                 SimpleToast.show(res.error, SimpleToast.SHORT);
               }, 700);
@@ -304,43 +298,65 @@ const SelectProduct = ({navigation, route}) => {
   // };
 
   const checkOut = async () => {
-    const locationPermission = await hasLocationPermission();
-    if (!locationPermission) {
-      return;
-    }
-    Geolocation.getCurrentPosition(
-      position => {
-        setLoading(true);
-        const params = {
-          customerId: customer.partyIdTo,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        };
-        ServiceHandle.post(Const.API.SalesmanCheckOut, params).then(res => {
-          if (res.ok) {
-            setLoading(false);
-            // dispatch(CustomerRedux.Actions.checkOut(customer.partyIdTo));
-            navigation.setParams({item: {...customer, status: 'VISITED'}});
-            SimpleToast.show(trans('checkOutDone'), SimpleToast.SHORT);
-          }
-        });
-      },
-      error => {
-        console.log('error', error);
-      },
-      {
-        accuracy: {
-          android: 'high',
-          ios: 'best',
+    setLoading(true);
+    try {
+      const locationPermission = await hasLocationPermission();
+      if (!locationPermission) {
+        return;
+      }
+      Geolocation.getCurrentPosition(
+        position => {
+          const params = {
+            customerId: customer.partyId,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            // latitude: 20.9897377,
+            // longitude: 105.8182346,
+          };
+          ServiceHandle.post(Const.API.SalesmanCheckOut, params).then(res => {
+            if (res.ok) {
+              if (res.data.checkOutOk === 'Y') {
+                navigation.setParams({item: {...customer, checkOutOk: 'Y'}});
+                Toast.show({
+                  type: 'success',
+                  text1: trans('checkOutDone'),
+                  visibilityTime: 2000,
+                });
+              } else {
+                setTimeout(() => {
+                  SimpleToast.show(res.data.message, SimpleToast.SHORT);
+                }, 700);
+              }
+            } else {
+              setTimeout(() => {
+                SimpleToast.show(res.error, SimpleToast.SHORT);
+              }, 700);
+            }
+          });
         },
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-        distanceFilter: 0,
-        forceRequestLocation: true,
-        showLocationDialog: true,
-      },
-    );
+        error => {
+          console.log('error', error);
+        },
+        {
+          accuracy: {
+            android: 'high',
+            ios: 'best',
+          },
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 10000,
+          distanceFilter: 0,
+          forceRequestLocation: true,
+          showLocationDialog: true,
+        },
+      );
+    } catch (error) {
+      setTimeout(() => {
+        SimpleToast.show(error, SimpleToast.SHORT);
+      }, 700);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onInventory = () => {
@@ -403,7 +419,7 @@ const SelectProduct = ({navigation, route}) => {
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('createOrder')} />
-        <Appbar.Action icon="trash-can-outline" onPress={openModalDelete} />
+        {/* <Appbar.Action icon="trash-can-outline" onPress={openModalDelete} /> */}
         <Appbar.Action icon="telegram" onPress={goConfirmOrder} />
       </Appbar.Header>
 

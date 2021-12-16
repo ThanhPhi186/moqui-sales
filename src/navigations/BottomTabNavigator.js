@@ -82,7 +82,8 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.AddCustomer ||
       routeName === NAVIGATION_NAME.MapScreen ||
       routeName === NAVIGATION_NAME.RecentDate ||
-      routeName === NAVIGATION_NAME.Inventory
+      routeName === NAVIGATION_NAME.Inventory ||
+      routeName === NAVIGATION_NAME.ChangeStore
     ) {
       return false;
     }
@@ -213,6 +214,10 @@ const BottomTabNavigator = () => {
           component={RecentDate}
         />
         <Stack.Screen name={NAVIGATION_NAME.Inventory} component={Inventory} />
+        <Stack.Screen
+          name={NAVIGATION_NAME.ChangeStore}
+          component={ChangeStore}
+        />
       </Stack.Navigator>
     );
   };

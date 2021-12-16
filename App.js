@@ -6,7 +6,7 @@ import configureStore from './src/config/store/configureStore';
 import MainNavigator from './src/navigations/MainNavigator';
 import {Colors} from './src/styles';
 import Toast from 'react-native-toast-message';
-// import BootSplash from 'react-native-bootsplash';
+import BootSplash from 'react-native-bootsplash';
 import {Animated, StyleSheet} from 'react-native';
 import {device_height} from './src/styles/Mixin';
 import {images} from './src/assets';
@@ -24,51 +24,51 @@ const theme = {
 };
 
 const App = () => {
-  // const [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
-  // const [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(false);
-  // const opacity = useRef(new Animated.Value(1));
-  // const translateY = useRef(new Animated.Value(0));
+  const [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
+  const [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(false);
+  const opacity = useRef(new Animated.Value(1));
+  const translateY = useRef(new Animated.Value(0));
 
-  // // const fakeApiCallWithoutBadNetwork = ms =>
-  // //   new Promise(resolve => setTimeout(resolve, ms));
+  // const fakeApiCallWithoutBadNetwork = ms =>
+  //   new Promise(resolve => setTimeout(resolve, ms));
 
-  // const init = async () => {
-  //   // You can uncomment this line to add a delay on app startup
-  //   // await fakeApiCallWithoutBadNetwork(400);
+  const init = async () => {
+    // You can uncomment this line to add a delay on app startup
+    // await fakeApiCallWithoutBadNetwork(400);
 
-  //   await BootSplash.hide();
+    await BootSplash.hide();
 
-  //   Animated.stagger(300, [
-  //     Animated.spring(translateY.current, {
-  //       useNativeDriver: true,
-  //       toValue: -50,
-  //     }),
-  //     Animated.spring(translateY.current, {
-  //       useNativeDriver: true,
-  //       toValue: device_height,
-  //     }),
-  //   ]).start();
+    Animated.stagger(300, [
+      Animated.spring(translateY.current, {
+        useNativeDriver: true,
+        toValue: -50,
+      }),
+      Animated.spring(translateY.current, {
+        useNativeDriver: true,
+        toValue: device_height,
+      }),
+    ]).start();
 
-  //   Animated.timing(opacity.current, {
-  //     useNativeDriver: true,
-  //     toValue: 0,
-  //     duration: 200,
-  //     delay: 400,
-  //   }).start(() => {
-  //     setBootSplashIsVisible(false);
-  //   });
-  // };
+    Animated.timing(opacity.current, {
+      useNativeDriver: true,
+      toValue: 0,
+      duration: 200,
+      delay: 400,
+    }).start(() => {
+      setBootSplashIsVisible(false);
+    });
+  };
 
-  // useEffect(() => {
-  //   bootSplashLogoIsLoaded && init();
-  // }, [bootSplashLogoIsLoaded]);
+  useEffect(() => {
+    bootSplashLogoIsLoaded && init();
+  }, [bootSplashLogoIsLoaded]);
 
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <PersistGate persistor={persistor}>
           <RootView>
-            {/* {bootSplashIsVisible ? (
+            {bootSplashIsVisible ? (
               <Animated.View
                 style={[
                   StyleSheet.absoluteFill,
@@ -85,9 +85,9 @@ const App = () => {
                   ]}
                 />
               </Animated.View>
-            ) : ( */}
-            <MainNavigator />
-            {/* )} */}
+            ) : (
+              <MainNavigator />
+            )}
             <Toast ref={ref => Toast.setRef(ref)} />
           </RootView>
         </PersistGate>

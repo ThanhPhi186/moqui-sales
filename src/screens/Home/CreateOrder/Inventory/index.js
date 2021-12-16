@@ -6,6 +6,7 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 import {useSelector} from 'react-redux';
 import {
   AppDialog,
+  Button,
   CardItem,
   ItemCustomer,
   SearchProductComponent,
@@ -13,8 +14,9 @@ import {
 import {ServiceHandle} from '../../../../services';
 import {Mixin} from '../../../../styles';
 import {Const, trans} from '../../../../utils';
-
 import styles from './styles';
+import Toast from 'react-native-toast-message';
+import {cloneDeep, difference, differenceBy} from 'lodash';
 
 const Inventory = ({navigation, route}) => {
   const [listChooseProduct, setListChooseProduct] = useState([]);
@@ -23,17 +25,17 @@ const Inventory = ({navigation, route}) => {
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [errMess, setErrMess] = useState('');
   const [modalErr, setModalErr] = useState(false);
+  const [listProductBase, setListProductBase] = useState([]);
   const [loading, setLoading] = useState(false);
   const customer = route.params.item;
 
   const animationIsRunning = useRef(false);
   const rowTranslateAnimatedValues = {};
   listChooseProduct.map(elm => {
-    rowTranslateAnimatedValues[elm.distinctId] = new Animated.Value(1);
+    rowTranslateAnimatedValues[elm.productId] = new Animated.Value(1);
   });
 
   const store = useSelector(state => state.StoreReducer.store);
-  console.log('listproduct', listChooseProduct);
 
   useEffect(() => {
     const getInventory = () => {
@@ -43,6 +45,8 @@ const Inventory = ({navigation, route}) => {
         .then(res => {
           if (res.ok) {
             setListChooseProduct(res.data.inventoryCustInfo);
+            const cloneData = cloneDeep(res.data.inventoryCustInfo);
+            setListProductBase(cloneData);
           } else {
             SimpleToast.show(res.error, SimpleToast.SHORT);
           }
@@ -67,6 +71,16 @@ const Inventory = ({navigation, route}) => {
     });
   };
 
+  const checkForUpdate = () => {
+    if (
+      differenceBy(listChooseProduct, listProductBase, 'qtyInInventory')
+        .length > 0
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const onSwipeValueChange = swipeData => {
     const {key, value} = swipeData;
     if (value < -Mixin.device_width && !animationIsRunning.current) {
@@ -75,9 +89,16 @@ const Inventory = ({navigation, route}) => {
         toValue: 0,
         duration: 200,
       }).start(() => {
-        const newData = [...listChooseProduct].filter(
-          item => item.distinctId !== key,
-        );
+        // const newData = [...listChooseProduct].filter(
+        //   item => item.productId !== key,
+        // );
+        // setListChooseProduct(newData);
+        const newData = [...listChooseProduct].map(elm => {
+          if (elm.productId === key) {
+            elm.qtyInInventory = 0;
+          }
+          return elm;
+        });
         setListChooseProduct(newData);
         animationIsRunning.current = false;
       });
@@ -88,9 +109,9 @@ const Inventory = ({navigation, route}) => {
     if (
       !listChooseProduct
         .map(elm => {
-          return elm.distinctId;
+          return elm.productId;
         })
-        .includes(item.distinctId)
+        .includes(item.productId)
     ) {
       const newList = [...listChooseProduct];
       newList.push({...item, ...{qtyInInventory: 1}});
@@ -113,33 +134,32 @@ const Inventory = ({navigation, route}) => {
   };
 
   const goConfirmInventory = () => {
-    const inventory = listChooseProduct.map(elm => {
-      return {
-        productId: elm.productId,
-        productName: elm.productName,
-        qtyInInventory: elm.qtyInInventory,
-        quantityUomId: elm.quantityUomId,
-      };
-    });
+    const inventory = differenceBy(
+      listChooseProduct,
+      listProductBase,
+      'qtyInInventory',
+    );
     const params = {
-      partyId: customer.partyIdTo,
-      inventory: inventory,
+      customerId: customer.partyId,
+      inventories: inventory,
     };
-    ServiceHandle.post(Const.API.UpdateInventoryCus, params).then(res => {
-      if (res.data.retMsg === 'update_success') {
-        setVisibleDialog(false);
-        setTimeout(() => {
-          SimpleToast.show(trans('updateInventorySuccess'), SimpleToast.SHORT);
-          navigation.popToTop();
-        }, 500);
-      } else {
-        setVisibleDialog(false);
-        setTimeout(() => {
-          setErrMess(res.data.retMsg);
-          setModalErr(true);
-        }, 500);
-      }
-    });
+
+    ServiceHandle.post(Const.API.UpdateInventoryCus, params)
+      .then(res => {
+        if (res.data.message === 'UpdateSuccess') {
+          Toast.show({
+            type: 'success',
+            text1: trans('updateInventorySuccess'),
+            visibilityTime: 2000,
+          });
+          navigation.goBack();
+        } else {
+          setTimeout(() => {
+            SimpleToast.show(res.error, SimpleToast.SHORT);
+          }, 700);
+        }
+      })
+      .finally(() => setVisibleDialog(false));
   };
 
   const openModalInventory = () => {
@@ -149,7 +169,7 @@ const Inventory = ({navigation, route}) => {
 
   const addQuantity = item => {
     const newData = [...listChooseProduct].map(elm => {
-      if (elm?.distinctId === item?.distinctId) {
+      if (elm?.productId === item?.productId) {
         elm.qtyInInventory += 1;
       }
       return elm;
@@ -160,7 +180,7 @@ const Inventory = ({navigation, route}) => {
   const lessQuantity = item => {
     if (item.qtyInInventory > 0) {
       const newData = [...listChooseProduct].map(elm => {
-        if (elm?.distinctId === item?.distinctId) {
+        if (elm?.productId === item?.productId) {
           elm.qtyInInventory -= 1;
         }
         return elm;
@@ -175,7 +195,7 @@ const Inventory = ({navigation, route}) => {
         style={[
           styles.rowFrontContainer,
           {
-            height: rowTranslateAnimatedValues[item.distinctId].interpolate({
+            height: rowTranslateAnimatedValues[item.productId].interpolate({
               inputRange: [0, 1],
               outputRange: [0, 80],
             }),
@@ -206,7 +226,7 @@ const Inventory = ({navigation, route}) => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('commodityInventory')} />
         {/* <Appbar.Action icon="trash-can-outline" onPress={openModalDelete} /> */}
-        <Appbar.Action icon="telegram" onPress={openModalInventory} />
+        {/* <Appbar.Action icon="telegram" onPress={openModalInventory} /> */}
       </Appbar.Header>
 
       <SearchProductComponent
@@ -223,7 +243,7 @@ const Inventory = ({navigation, route}) => {
 
       <SwipeListView
         disableRightSwipe
-        data={listChooseProduct}
+        data={listChooseProduct.filter(elm => elm.qtyInInventory > 0)}
         renderItem={({item}) => renderItem(item)}
         renderHiddenItem={renderHiddenItem}
         rightOpenValue={-Mixin.device_width}
@@ -232,8 +252,15 @@ const Inventory = ({navigation, route}) => {
         previewOpenDelay={3000}
         onSwipeValueChange={onSwipeValueChange}
         useNativeDriver={false}
-        keyExtractor={(item, index) => item.distinctId}
+        keyExtractor={(item, index) => item.productId}
       />
+      {checkForUpdate() && (
+        <Button
+          containerStyle={styles.btnConfirm}
+          title={trans('updateInventory')}
+          onPress={openModalInventory}
+        />
+      )}
 
       <AppDialog
         content={contentDialog}

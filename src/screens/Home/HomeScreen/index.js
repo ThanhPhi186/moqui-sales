@@ -59,10 +59,10 @@ const HomeScreen = ({navigation}) => {
             <View>
               <AppText style={styles.txtHello}>Xin chào,</AppText>
               <AppText title style={styles.txtName}>
-                Nguyễn Thành Phi
+                trangbq
               </AppText>
               <AppText title style={styles.txtAffiliateCode}>
-                CHT00102
+                {store.storeName}
               </AppText>
             </View>
           </View>
@@ -139,23 +139,25 @@ const HomeScreen = ({navigation}) => {
         />
         <ItemHomeMenu
           iconName="file-remove"
-          title={`Thống kê ${'\n'} huỷ hàng`}
+          title={`Thống kê ${'\n'} doanh số`}
           onPress={() =>
             navigation.navigate(NAVIGATION_NAME.CancelOrderStatistic)
           }
         />
         <ItemHomeMenu
           iconName="bag-personal"
-          title="Kiểm kê"
+          title="Thống kê doanh số saleman"
           onPress={() =>
             navigation.navigate(NAVIGATION_NAME.ListInventoryPeriod)
           }
         />
         <ItemHomeMenu
           iconName="history"
-          title={`Lịch sử ${'\n'} đăng nhập`}
+          title={`Thay đổi ${'\n'} cửa hàng`}
           onPress={() =>
-            navigation.navigate(NAVIGATION_NAME.CashierLoginHistory)
+            navigation.navigate(NAVIGATION_NAME.ChangeStore, {
+              fromScreen: NAVIGATION_NAME.HomeScreen,
+            })
           }
         />
       </View>
