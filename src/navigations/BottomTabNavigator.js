@@ -48,6 +48,7 @@ import TabShape from './TabShape';
 import {NAVIGATION_BOTTOM_TABS_HEIGHT} from '../styles/GlobalStyles';
 import {NAVIGATION_NAME} from '.';
 import {Appbar} from 'react-native-paper';
+import {PromotionDetail} from '../screens/Home';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,7 +84,8 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.MapScreen ||
       routeName === NAVIGATION_NAME.RecentDate ||
       routeName === NAVIGATION_NAME.Inventory ||
-      routeName === NAVIGATION_NAME.ChangeStore
+      routeName === NAVIGATION_NAME.ChangeStore ||
+      routeName === NAVIGATION_NAME.PromotionDetail
     ) {
       return false;
     }
@@ -217,6 +219,10 @@ const BottomTabNavigator = () => {
         <Stack.Screen
           name={NAVIGATION_NAME.ChangeStore}
           component={ChangeStore}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.PromotionDetail}
+          component={PromotionDetail}
         />
       </Stack.Navigator>
     );

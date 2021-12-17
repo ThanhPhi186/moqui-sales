@@ -49,9 +49,9 @@ const ChangePassword = ({navigation}) => {
           visibilityTime: 2000,
         });
 
-        dispatch(AuthenOverallRedux.Actions.logout.request());
-        dispatch(StoreRedux.Actions.changeStore(''));
-        ServiceHandle.setHeader('');
+        // dispatch(AuthenOverallRedux.Actions.logout.request());
+        // dispatch(StoreRedux.Actions.changeStore(''));
+        // ServiceHandle.setHeader('');
       } else {
         setMessErr(res.error);
         setModalError(true);

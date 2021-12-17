@@ -240,4 +240,5 @@ export default {
   totalPayable: 'Tổng tiền phải trả',
   notCustomer: 'Chưa có khách hàng',
   updateInventory: 'Cập nhật tồn kho',
+  content: 'Nội dung',
 };

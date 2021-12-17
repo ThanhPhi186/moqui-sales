@@ -20,6 +20,7 @@ import {AppLoading} from '../../../../components/atoms';
 import hasLocationPermission from '../../../../helpers/LocationHelper';
 import {NAVIGATION_NAME} from '../../../../navigations';
 import Toast from 'react-native-toast-message';
+import {isEmpty} from 'lodash';
 
 const SelectProduct = ({navigation, route}) => {
   const [listChooseProduct, setListChooseProduct] = useState([]);
@@ -30,6 +31,7 @@ const SelectProduct = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [searchString, setSearchString] = useState('');
   const [listProduct, setListProduct] = useState([]);
+  const [lastOrderId, setLastOrderId] = useState(null);
   const customer = route.params.item;
 
   const dispatch = useDispatch();
@@ -47,20 +49,33 @@ const SelectProduct = ({navigation, route}) => {
   });
   // const listCustomer = useSelector(state => state.CustomerReducer.listCustomer);
 
-  console.log('customer', customer);
+  console.log('listchoose', listChooseProduct);
 
-  // useEffect(() => {
-  //   const params = {
-  //     customerId: customer.partyId,
-  //   };
-  //   ServiceHandle.get(Const.API.GetLastOrderBeingChanged, params).then(res => {
-  //     if (res.ok) {
-  //       // setListChooseProduct(res.data.orderDetail.orderItems);
-  //     } else {
-  //       SimpleToast.show(res.error, SimpleToast.SHORT);
-  //     }
-  //   });
-  // }, [customer.partyId]);
+  useEffect(() => {
+    const params = {
+      customerId: customer.partyId,
+    };
+    ServiceHandle.get(Const.API.GetLastOrderBeingChanged, params).then(res => {
+      if (res.ok) {
+        if (!isEmpty(res.data)) {
+          const convertData = res.data.orderDetail.orderItems.map(elm => {
+            return {
+              productName: elm.itemDescription,
+              productId: elm.productId,
+              priceOut: {price: elm.unitAmount},
+              quantity: elm.quantity,
+              orderItemSeqId: elm.orderItemSeqId,
+            };
+          });
+          setLastOrderId(res.data.orderDetail.orderId);
+          setListChooseProduct(convertData);
+        } else {
+        }
+      } else {
+        SimpleToast.show(res.error, SimpleToast.SHORT);
+      }
+    });
+  }, [customer.partyId]);
 
   const searchProduct = txt => {
     const params = {
@@ -132,7 +147,7 @@ const SelectProduct = ({navigation, route}) => {
 
     const products = convertList?.map(elm => {
       return {
-        productName: elm.name,
+        productName: elm.productName,
         productId: elm.productId,
         orderItemSeqId: elm.orderItemSeqId,
         quantity: elm.quantity,
@@ -141,24 +156,36 @@ const SelectProduct = ({navigation, route}) => {
     });
 
     if (convertList.length > 0) {
-      const params = {
-        productStoreId: store.productStoreId,
-        customerPartyId: customer.partyId,
-        orderItems: products,
-      };
+      setLoading(true);
+      const params = lastOrderId
+        ? {
+            productStoreId: store.productStoreId,
+            orderId: lastOrderId,
+            orderItems: products,
+          }
+        : {
+            productStoreId: store.productStoreId,
+            customerPartyId: customer.partyId,
+            orderItems: products,
+          };
 
-      ServiceHandle.post(Const.API.CreateOrder, params).then(res => {
-        if (res.ok) {
-          navigation.navigate(NAVIGATION_NAME.ConfirmOrder, {
-            listChooseProduct: convertList,
-            orderId: res.data.orderId,
-          });
-        } else {
-          setTimeout(() => {
-            SimpleToast.show(res.error, SimpleToast.SHORT);
-          }, 700);
-        }
-      });
+      ServiceHandle.post(
+        lastOrderId ? Const.API.EditOrder : Const.API.CreateOrder,
+        params,
+      )
+        .then(res => {
+          if (res.ok) {
+            navigation.navigate(NAVIGATION_NAME.ConfirmOrder, {
+              listChooseProduct: convertList,
+              orderId: res.data.orderId,
+            });
+          } else {
+            setTimeout(() => {
+              SimpleToast.show(res.error, SimpleToast.SHORT);
+            }, 700);
+          }
+        })
+        .finally(() => setLoading(false));
     } else {
       setVisibleDialog(true);
       setContentDialog(trans('cartNotEmpty'));

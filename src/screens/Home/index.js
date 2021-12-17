@@ -21,7 +21,7 @@ import {
   ListLocation,
 } from './Inventory';
 import ChooseCustomer from './ChooseCustomer';
-import PromotionScreen from './PromotionScreen';
+import {PromotionScreen, PromotionDetail} from './Promotion';
 import LookUpProduct from './LookUpProduct';
 import {ListSaleOrderScreen, OrderDetailScreen} from './ListSaleOrder';
 import {AgentDetail, AgentList} from './AgentProposalList';
@@ -55,4 +55,5 @@ export {
   AddCustomer,
   RecentDate,
   Inventory,
+  PromotionDetail,
 };

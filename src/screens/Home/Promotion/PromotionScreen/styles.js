@@ -1,5 +1,5 @@
-import {Colors, Mixin} from '../../../styles';
-import {FONT_SIZE_14, FONT_SIZE_16} from '../../../styles/Typography';
+import {Colors, Mixin} from '../../../../styles';
+import {FONT_SIZE_14, FONT_SIZE_16} from '../../../../styles/Typography';
 
 const styles = {
   containerItem: {

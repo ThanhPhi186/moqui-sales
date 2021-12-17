@@ -37,6 +37,7 @@ const NAVIGATION_NAME = {
   MapScreen: 'MapScreen',
   RecentDate: 'RecentDate',
   Inventory: 'Inventory',
+  PromotionDetail: 'PromotionDetail',
 };
 
 export default NAVIGATION_NAME;

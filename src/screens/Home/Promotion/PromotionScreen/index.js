@@ -2,19 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Appbar} from 'react-native-paper';
-import {Const, trans} from '../../../utils';
+import {Const, trans} from '../../../../utils';
 import styles from './styles';
 import moment from 'moment';
-import {Colors, Mixin} from '../../../styles';
+import {Colors, Mixin} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
-import {images} from '../../../assets';
+import {images} from '../../../../assets';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AppDialog} from '../../../components/molecules';
-import {AuthenOverallRedux} from '../../../redux';
-import {AppLoading, AppText} from '../../../components/atoms';
+import {AppDialog} from '../../../../components/molecules';
+import {AuthenOverallRedux} from '../../../../redux';
+import {AppLoading, AppText} from '../../../../components/atoms';
 import SimpleToast from 'react-native-simple-toast';
-import {ServiceHandle} from '../../../services';
+import {ServiceHandle} from '../../../../services';
+import {NAVIGATION_NAME} from '../../../../navigations';
 
 const PromotionScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -70,10 +71,12 @@ const PromotionScreen = ({navigation}) => {
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        disabled
         style={styles.containerItem}
-        // onPress={() => this.onDetail(data)}
-      >
+        onPress={() =>
+          navigation.navigate(NAVIGATION_NAME.PromotionDetail, {
+            storePromotionId: item.storePromotionId,
+          })
+        }>
         <View
           style={{
             flex: 0.15,

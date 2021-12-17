@@ -53,6 +53,26 @@ const ConfirmOrder = ({navigation, route}) => {
       .finally(() => setLoading(false));
   };
 
+  const cancelOrder = () => {
+    setLoading(true);
+    ServiceHandle.post(Const.API.CancelOrder, {orderId})
+      .then(res => {
+        if (res.ok) {
+          Toast.show({
+            type: 'success',
+            text1: 'Đơn hàng đã được hủy 👋',
+            visibilityTime: 2000,
+          });
+          navigation.popToTop();
+        } else {
+          setTimeout(() => {
+            SimpleToast.show(res.error, SimpleToast.SHORT);
+          }, 700);
+        }
+      })
+      .finally(() => setLoading(false));
+  };
+
   const renderItem = item => {
     return <CardItem disabled item={item} type="readOnly" />;
   };
@@ -97,7 +117,7 @@ const ConfirmOrder = ({navigation, route}) => {
           <Button
             containerStyle={styles.btnCancel}
             title={trans('cancelOrder')}
-            onPress={() => {}}
+            onPress={cancelOrder}
             titleColor={Colors.PRIMARY}
           />
           <Button

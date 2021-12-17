@@ -30,6 +30,9 @@ export default {
     UpdateInventoryCus: '/rest/s1/salesnet/updateInventoryCus',
     UpdatePasswordMobile: '/rest/s1/salesnet/mUpdatePasswordMobile',
     GetLastOrderBeingChanged: '/rest/s1/salesnet/getLastOrderBeingChanged',
+    GetPromoDetail: '/rest/s1/salesnet/getPromoDetail',
+    EditOrder: '/rest/s1/salesnet/editOrder',
+    CancelOrder: '/rest/s1/salesnet/cancelOrder',
 
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',
