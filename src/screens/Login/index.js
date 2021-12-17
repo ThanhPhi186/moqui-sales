@@ -35,6 +35,7 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const login = async () => {
+    ServiceHandle.setHeader('');
     setLoading(true);
     const params = {
       username: employeeCode,

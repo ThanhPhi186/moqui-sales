@@ -44,6 +44,7 @@ const persistor = persistStore(store, persistConfig, () => {
 
   if (stateData.AuthenOverallReducer.cookies) {
     ServiceHandle.setHeader(stateData.AuthenOverallReducer.cookies);
+    // ServiceHandle.setHeader('bBneUokaxmAht5thCarrzHfWh8JTVLPNmfbNOE');
   }
 });
 

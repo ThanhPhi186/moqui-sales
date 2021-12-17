@@ -3,6 +3,7 @@ import {create} from 'apisauce';
 // import qs from 'querystring';
 import {useDispatch} from 'react-redux';
 import {AuthenOverallRedux, StoreRedux} from '../redux';
+import configureStore from '../config/store/configureStore';
 
 const api = create({
   timeout: 20000,
@@ -13,6 +14,13 @@ const api = create({
   },
   withCredentials: false,
 });
+
+const logout = () => {
+  // console.log('aaaa');
+  // setHeader('');
+  // configureStore().store.dispatch(AuthenOverallRedux.Actions.logout.request());
+  configureStore().store.dispatch(StoreRedux.Actions.changeStore(''));
+};
 
 // api.addMonitor(res => {
 //   console.log('addMonitor', res);
@@ -46,6 +54,17 @@ const returnData = response => {
         data: response.data,
         headers: response.headers,
         ok: true,
+      };
+    } else if (response.status === 401) {
+      console.log('401401401');
+      // configureStore().store.dispatch(
+      //   AuthenOverallRedux.Actions.logout.request(),
+      // ),
+      logout();
+
+      return {
+        ok: false,
+        error: trans('expiredToken'),
       };
     } else {
       return {

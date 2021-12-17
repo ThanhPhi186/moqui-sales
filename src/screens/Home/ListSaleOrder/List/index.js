@@ -13,8 +13,8 @@ import {NAVIGATION_NAME} from '../../../../navigations';
 import {ServiceHandle} from '../../../../services';
 import {Const, trans} from '../../../../utils';
 import ItemOrder from '../../component/ItemOrder';
-
 import styles from './styles';
+import {AppLoading} from '../../../../components/atoms';
 
 const PAGE_SIDE = 20;
 const ListSaleOrderScreen = ({navigation}) => {
@@ -23,12 +23,12 @@ const ListSaleOrderScreen = ({navigation}) => {
   const [page, setPage] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [modalLogout, setModalLogout] = useState(false);
-  // const [loadMore, setLoadMore] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getListOrder = () => {
-      setRefreshing(true);
+      setLoading(true);
       const params = {
         pagesize: PAGE_SIDE,
         pageIndex: page,
@@ -45,7 +45,7 @@ const ListSaleOrderScreen = ({navigation}) => {
             }, 700);
           }
         })
-        .finally(() => setRefreshing(false));
+        .finally(() => setLoading(false));
     };
     getListOrder();
   }, [page]);
@@ -95,6 +95,8 @@ const ListSaleOrderScreen = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <AppLoading isVisible={loading} />
+
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('listSaleOrder')} />

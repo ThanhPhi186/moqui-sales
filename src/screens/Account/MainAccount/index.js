@@ -27,9 +27,9 @@ const MainAccount = ({navigation}) => {
   const [modalChangeCompany, setModalChangeCompany] = useState(false);
 
   const logout = () => {
+    ServiceHandle.setHeader('');
     dispatch(AuthenOverallRedux.Actions.logout.request());
     dispatch(StoreRedux.Actions.changeStore(''));
-    ServiceHandle.setHeader('');
   };
 
   const changeCompany = () => {
