@@ -103,7 +103,7 @@ const LoginScreen = ({navigation}) => {
               fontWeight: 'bold',
               marginBottom: 24,
             }}>
-            Login
+            Đăng nhập
           </AppText>
           <TextInput
             label={trans('employeeCode')}

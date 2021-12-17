@@ -12,6 +12,7 @@ import {Colors} from '../../../styles';
 import {Const, trans} from '../../../utils';
 
 import styles from './styles';
+import Toast from 'react-native-toast-message';
 
 const ChangePassword = ({navigation}) => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -36,17 +37,21 @@ const ChangePassword = ({navigation}) => {
       return;
     }
     const params = {
-      currentPassword,
+      oldPassword: currentPassword,
       newPassword,
-      passwordVerify,
+      newPasswordVerify: passwordVerify,
     };
-    ServiceHandle.post(Const.API.UpdatePassWordMobilemcs, params).then(res => {
+    ServiceHandle.post(Const.API.UpdatePasswordMobile, params).then(res => {
       if (res.ok) {
-        SimpleToast.show(trans('changePassSuccess'));
-        setTimeout(() => {
-          dispatch(AuthenOverallRedux.Actions.handleLogout());
-          dispatch(StoreRedux.Actions.changeStore(''));
-        }, 500);
+        Toast.show({
+          type: 'success',
+          text1: trans('changePassSuccess'),
+          visibilityTime: 2000,
+        });
+
+        dispatch(AuthenOverallRedux.Actions.logout.request());
+        dispatch(StoreRedux.Actions.changeStore(''));
+        ServiceHandle.setHeader('');
       } else {
         setMessErr(res.error);
         setModalError(true);

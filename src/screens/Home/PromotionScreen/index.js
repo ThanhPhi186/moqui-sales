@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {AppDialog} from '../../../components/molecules';
 import {AuthenOverallRedux} from '../../../redux';
-import {AppText} from '../../../components/atoms';
+import {AppLoading, AppText} from '../../../components/atoms';
 import SimpleToast from 'react-native-simple-toast';
 import {ServiceHandle} from '../../../services';
 
@@ -28,16 +28,24 @@ const PromotionScreen = ({navigation}) => {
 
   const [refreshing, setRefreshing] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getPromotion = async () => {
-      const params = {
-        productStoreId: store.productStoreId,
-      };
-      const res = await ServiceHandle.get(Const.API.GetPromoList, params);
-      if (res.ok) {
-        setListPromotion(res.data.promoList);
-      } else {
-        SimpleToast.show(res.error, SimpleToast.SHORT);
+      setLoading(true);
+      try {
+        const params = {
+          productStoreId: store.productStoreId,
+        };
+        const res = await ServiceHandle.get(Const.API.GetPromoList, params);
+        if (res.ok) {
+          setListPromotion(res.data.promoList);
+        } else {
+          SimpleToast.show(res.error, SimpleToast.SHORT);
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
     };
     getPromotion();
@@ -136,6 +144,7 @@ const PromotionScreen = ({navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.BACKGROUND_COLOR}}>
+      <AppLoading isVisible={loading} />
       <Appbar.Header>
         <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />
         <Appbar.Content color="white" title={trans('myPromotion')} />

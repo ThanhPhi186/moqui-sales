@@ -14,7 +14,7 @@ import {ServiceHandle} from '../../../services';
 import SimpleToast from 'react-native-simple-toast';
 import {ItemCustomer} from '../../../components/molecules';
 import {NAVIGATION_NAME} from '../../../navigations';
-import {AppLoading} from '../../../components/atoms';
+import {AppLoading, AppText} from '../../../components/atoms';
 
 const initialLayout = {width: Mixin.device_width};
 
@@ -107,6 +107,10 @@ const ChooseCustomer = ({navigation, route}) => {
     }
   };
 
+  const renderEmptyComponent = () => {
+    return <AppText style={styles.txtEmpty}>{trans('notCustomer')}</AppText>;
+  };
+
   const InLine = () => {
     return (
       <FlatList
@@ -115,6 +119,7 @@ const ChooseCustomer = ({navigation, route}) => {
         keyExtractor={(item, indexInline) => indexInline.toString()}
         extraData={dataInline}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyComponent}
         // refreshControl={
         //   <RefreshControl refreshing={loading} onRefresh={onRefresh} />
         // }
@@ -129,6 +134,7 @@ const ChooseCustomer = ({navigation, route}) => {
         keyExtractor={(item, indexLeftLine) => indexLeftLine.toString()}
         extraData={dataLeftLine}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyComponent}
         // refreshControl={
         //   <RefreshControl refreshing={loading} onRefresh={onRefresh} />
         // }

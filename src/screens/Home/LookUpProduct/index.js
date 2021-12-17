@@ -22,10 +22,11 @@ const LookUpProduct = ({navigation}) => {
     const params = {
       documentType: 'MantleProduct',
       queryString: txt,
+      productStoreId: productStoreId,
     };
-    ServiceHandle.get(Const.API.QuickSearch, params).then(res => {
+    ServiceHandle.get(Const.API.SearchProduct, params).then(res => {
       if (res.ok) {
-        setListProduct(res.data.documentList);
+        setListProduct(res.data.products);
       } else {
         SimpleToast.show(res.error, SimpleToast.SHORT);
       }
@@ -82,13 +83,17 @@ const LookUpProduct = ({navigation}) => {
             title={trans('productCode')}
             value={dataProduct.productId}
           />
-          <ItemInfo title={trans('defaultPrice')} value={dataProduct.price} />
+          <ItemInfo
+            title={trans('defaultPrice')}
+            value={dataProduct.price}
+            price
+          />
           <ItemInfo
             title={trans('listedPrice')}
             value={dataProduct.productListPriceValue}
           />
-          <ItemInfo title={trans('unit')} value={dataProduct.quantityUomDesc} />
-          <ItemInfo title={trans('taxApplicable')} value="" />
+          {/* <ItemInfo title={trans('unit')} value={dataProduct.quantityUomDesc} /> */}
+          <ItemInfo title={trans('taxApplicable')} value="" price />
           <ItemInfo
             title={trans('productType')}
             value={dataProduct.productCategoryId}

@@ -8,78 +8,24 @@ import {NAVIGATION_NAME} from '../../../../navigations';
 import {ServiceHandle} from '../../../../services';
 import {Colors, Mixin} from '../../../../styles';
 import {container} from '../../../../styles/GlobalStyles';
+import {FONT_SIZE_16} from '../../../../styles/Typography';
 
 import {Const, trans} from '../../../../utils';
 
 const ListInventoryPeriod = ({navigation}) => {
   const store = useSelector(state => state.StoreReducer.store);
-  const [data, setData] = useState([]);
+
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    const params = {
-      productStoreId: store,
-      viewIndex: 0,
-      viewSize: 20,
-    };
-    ServiceHandle.post(Const.API.GetStockingEventsMobilemcs, params)
-      .then(res => {
-        if (res.ok) {
-          setData(res.data.listEvents);
-        } else {
-          setTimeout(() => {
-            SimpleToast.show(res.error, SimpleToast.SHORT);
-          }, 700);
-        }
-      })
-      .finally(() => setLoading(false));
-  }, [store]);
-
-  const renderStatus = status => {
-    if (status === 'N') {
-      return trans('notClosedYet');
-    } else {
-      return trans('closed');
-    }
-  };
-
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate(NAVIGATION_NAME.DetailInventoryPeriod, {
-            eventDetail: item,
-          })
-        }
-        style={styles.containerItem}>
-        <View style={styles.viewHeaderItem}>
-          <AppText style={styles.txtEventId}>
-            {item.eventId} - {item.facilityId}
-          </AppText>
-          <AppText style={{color: Colors.PRIMARY}}>
-            {renderStatus(item.isClosed)}
-          </AppText>
-        </View>
-        <AppText>{item.fromDate}</AppText>
-      </TouchableOpacity>
-    );
-  };
 
   return (
     <View style={container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title={trans('listInventoryPeriod')} />
+        <Appbar.Content title="Thống kê sales man" />
       </Appbar.Header>
       <AppLoading isVisible={loading} />
       <View style={styles.contentContainer}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={styles.contentFlatList}
-        />
+        <AppText style={styles.txtEmpty}>Tính năng đang phát triển</AppText>
       </View>
     </View>
   );
@@ -115,5 +61,11 @@ const styles = StyleSheet.create({
   },
   txtEventId: {
     fontWeight: 'bold',
+  },
+  txtEmpty: {
+    color: Colors.GRAY,
+    fontSize: FONT_SIZE_16,
+    textAlign: 'center',
+    marginTop: Mixin.moderateSize(80),
   },
 });

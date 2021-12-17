@@ -54,7 +54,7 @@ const CardItem = props => {
           </TouchableOpacity>
         ) : (
           <AppText style={styles.info}>
-            {item.priceVAT && numeral(item.priceVAT).format()}
+            {item?.priceOut && `${numeral(item.priceOut.price).format()} đ`}
           </AppText>
         )}
       </View>
@@ -67,7 +67,9 @@ const CardItem = props => {
             <TextInput
               style={styles.boxAmount}
               value={
-                item?.quantity?.toString() || item.qtyExpInventory.toString()
+                item?.quantity?.toString() ||
+                item?.qtyExpInventory?.toString() ||
+                item?.qtyInInventory?.toString()
               }
               keyboardType="number-pad"
               onChangeText={valueInput => changeQuantityProps(valueInput, item)}

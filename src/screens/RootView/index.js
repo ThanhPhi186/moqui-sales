@@ -2,33 +2,46 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import hasLocationPermission from '../../helpers/LocationHelper';
 import {Colors} from '../../styles';
+import Geolocation from 'react-native-geolocation-service';
+import {useDispatch} from 'react-redux';
+import {AuthenOverallRedux} from '../../redux';
 
 const RootView = props => {
-  // useEffect(() => {
-  //   // Assume a message-notification contains a "type" property in the data payload of the screen to open
-  //   messaging().onNotificationOpenedApp(remoteMessage => {
-  //     console.log(
-  //       'Notification caused app to open from background state:',
-  //       remoteMessage.notification,
-  //     );
-  //     // navigation.navigate(remoteMessage.data.type);
-  //   });
+  const dispatch = useDispatch();
 
-  //   // Check whether an initial notification is available
-  //   messaging()
-  //     .getInitialNotification()
-  //     .then(remoteMessage => {
-  //       if (remoteMessage) {
-  //         console.log(
-  //           'Notification caused app to open from quit state:',
-  //           remoteMessage.notification,
-  //         );
-  //         // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-  //       }
-  //       // setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const getCurrentLocation = async () => {
+      const locationPermission = await hasLocationPermission();
+      if (!locationPermission) {
+        return;
+      }
+
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log('positionmmm', position);
+          dispatch(AuthenOverallRedux.Actions.getLocation(position.coords));
+        },
+        error => {
+          console.log('error', error);
+        },
+        {
+          accuracy: {
+            android: 'high',
+            ios: 'best',
+          },
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 10000,
+          distanceFilter: 0,
+          forceRequestLocation: true,
+          showLocationDialog: true,
+        },
+      );
+    };
+    getCurrentLocation();
+  }, [dispatch]);
 
   return (
     <SafeAreaProvider>

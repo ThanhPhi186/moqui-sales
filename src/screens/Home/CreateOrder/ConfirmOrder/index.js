@@ -16,16 +16,22 @@ const ConfirmOrder = ({navigation, route}) => {
   const {orderId} = route.params;
   const [orderValue, setOrderValue] = useState();
   const [loading, setLoading] = useState(false);
+  const [dataDetail, setDataDetail] = useState();
 
-  // useEffect(() => {
-  //   ServiceHandle.post(Const.API.CalculatePOMobilemcs, params).then(res => {
-  //     if (res.ok) {
-  //       setOrderValue(res.data);
-  //     } else {
-  //       SimpleToast.show(res.error, SimpleToast.SHORT);
-  //     }
-  //   });
-  // }, [params]);
+  useEffect(() => {
+    const params = {
+      orderId,
+    };
+    ServiceHandle.get(Const.API.GetSalesOrderDetails, params).then(res => {
+      if (res.ok) {
+        setDataDetail(res.data.orderDetail);
+      } else {
+        SimpleToast.show(res.error, SimpleToast.SHORT);
+      }
+    });
+  }, [orderId]);
+
+  console.log('dataDetail', dataDetail);
 
   const submitOrder = () => {
     setLoading(true);
@@ -83,7 +89,7 @@ const ConfirmOrder = ({navigation, route}) => {
           <View style={styles.showPrice}>
             <AppText style={styles.textPay}>{trans('totalPayment')}</AppText>
             <AppText style={styles.textPrice}>
-              {numeral(orderValue?.orderGrandTotal).format()} đ
+              {numeral(dataDetail?.grandTotal).format()} đ
             </AppText>
           </View>
         </View>

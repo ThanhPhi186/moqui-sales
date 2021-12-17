@@ -55,12 +55,11 @@ const ListPriceChange = ({navigation}) => {
         <AppText style={styles.nameProduct}>
           {item.internalName || item.productName}
         </AppText>
-        <AppText style={styles.txtInfo}>
-          {item.productCode} - {item.uomId}
-        </AppText>
+        <AppText style={styles.txtInfo}>{item.productId}</AppText>
         <View style={styles.viewRow}>
           <AppText style={styles.txtInfo}>
-            {numeral(item.priceVAT).format('0,0')}đ - {trans('listedPrice')} :
+            {/* {numeral(item.priceVAT).format('0,0')}đ -  */}
+            {trans('listedPrice')} :
           </AppText>
           <AppText
             style={[
@@ -68,7 +67,7 @@ const ListPriceChange = ({navigation}) => {
               item.priceVAT !== item.unitListPriceVAT && styles.txtInfoChange,
             ]}>
             {' '}
-            {numeral(item.unitListPriceVAT).format('0,0')} đ
+            {numeral(item.price).format('0,0')} đ
           </AppText>
         </View>
       </View>
