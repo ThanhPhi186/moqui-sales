@@ -9,6 +9,7 @@ buildscript {
         ndkVersion = "21.4.7075529"
         playServicesVersion = "17.0.0"
         androidMapsUtilsVersion = "2.3.0"
+        excludeAppGlideModule = true
     }
     repositories {
         google()
