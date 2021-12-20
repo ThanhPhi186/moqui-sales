@@ -7,7 +7,10 @@ const initialState = {
   location: null,
   errorMessage: '',
   loading: false,
-  accountUser: null,
+  accountUser: {
+    username: '',
+    password: '',
+  },
   cookies: '',
 };
 
@@ -36,8 +39,14 @@ const overallReducer = createReducer(initialState, {
   //logout
   [Actions.logout.success]: (state, action) => {
     state.userAuthen = {};
-    state.accountUser = null;
     state.cookies = '';
+  },
+
+  // set account
+
+  [Actions.setAccount]: (state, action) => {
+    console.log('aaaa');
+    state.accountUser = action.payload;
   },
 
   // reset Company

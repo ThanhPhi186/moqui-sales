@@ -13,6 +13,7 @@ export const SET_COOKIES = 'SET_COOKIES';
 export const GET_PROFILE = 'GET_PROFILE';
 export const SET_DOMAIN = 'SET_DOMAIN';
 export const HANDLE_LOGOUT = 'HANDLE_LOGOUT';
+export const SET_ACCOUNT = 'SET_ACCOUNT';
 
 const login = reduxHelper.generateActions(LOGIN);
 const logout = reduxHelper.generateActions(LOGOUT);
@@ -25,6 +26,7 @@ const loginSuccess = createAction(LOGIN_SUCCESS);
 const setCookies = createAction(SET_COOKIES);
 const setDomain = createAction(SET_DOMAIN);
 const handleLogout = createAction(HANDLE_LOGOUT);
+const setAccount = createAction(SET_ACCOUNT);
 
 export {
   login,
@@ -37,4 +39,5 @@ export {
   getProfile,
   setDomain,
   handleLogout,
+  setAccount,
 };

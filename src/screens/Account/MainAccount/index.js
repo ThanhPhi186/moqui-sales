@@ -21,8 +21,11 @@ import SimpleToast from 'react-native-simple-toast';
 const MainAccount = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const userInfo = useSelector(state => state.AuthenOverallReducer.userAuthen);
   const store = useSelector(state => state.StoreReducer.store);
+
+  const accountUser = useSelector(
+    state => state.AuthenOverallReducer.accountUser,
+  );
 
   const [modalLogout, setModalLogout] = useState(false);
   const [modalChangeCompany, setModalChangeCompany] = useState(false);
@@ -43,13 +46,13 @@ const MainAccount = ({navigation}) => {
       <BannerBehind backGround={images.ic_Background} avatar={images.avatar} />
       <View style={styles.viewInfo}>
         <AppText title style={styles.txtName}>
-          trangbq
+          {accountUser.username}
         </AppText>
         <AppText style={styles.txtInfo}>{store.storeName}</AppText>
       </View>
       <View style={{flex: 1}}>
         <View style={styles.largeIndicate} />
-        <ItemAccount point={userInfo} />
+        <ItemAccount point />
         <View style={styles.largeIndicate} />
         <ScrollView
           contentContainerStyle={{

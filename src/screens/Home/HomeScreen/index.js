@@ -30,6 +30,9 @@ import {IconCart} from '../../../components/molecules';
 
 const HomeScreen = ({navigation}) => {
   const store = useSelector(state => state.StoreReducer.store);
+  const accountUser = useSelector(
+    state => state.AuthenOverallReducer.accountUser,
+  );
 
   const componentItemTop = (title, icon, onPress) => {
     return (
@@ -59,7 +62,7 @@ const HomeScreen = ({navigation}) => {
             <View>
               <AppText style={styles.txtHello}>Xin chào,</AppText>
               <AppText title style={styles.txtName}>
-                trangbq
+                {accountUser.username}
               </AppText>
               <AppText title style={styles.txtAffiliateCode}>
                 {store.storeName}
@@ -116,51 +119,56 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
       </View>
-      <View style={styles.containerItem}>
-        <ItemHomeMenu
-          iconName="cart"
-          title={`Tạo đơn ${'\n'} hàng`}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.ChooseCustomer)}
-        />
-        <ItemHomeMenu
-          iconName="badge-account-horizontal"
-          title={'DS đề xuất đại lý bán lẻ'}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.AgentList)}
-        />
-        <ItemHomeMenu
-          iconName="account-multiple"
-          title={`Thêm mới ${'\n'} khách hàng`}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.AddCustomer)}
-        />
-        <ItemHomeMenu
-          iconName="file-edit"
-          title={`Danh sách giá ${'\n'} thay đổi`}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.ListPriceChange)}
-        />
-        <ItemHomeMenu
-          iconName="file-remove"
-          title={`Thống kê ${'\n'} doanh số`}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_NAME.CancelOrderStatistic)
-          }
-        />
-        <ItemHomeMenu
-          iconName="bag-personal"
-          title="Thống kê doanh số saleman"
-          onPress={() =>
-            navigation.navigate(NAVIGATION_NAME.ListInventoryPeriod)
-          }
-        />
-        <ItemHomeMenu
-          iconName="history"
-          title={`Thay đổi ${'\n'} cửa hàng`}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_NAME.ChangeStore, {
-              fromScreen: NAVIGATION_NAME.HomeScreen,
-            })
-          }
-        />
-      </View>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: NAVIGATION_BOTTOM_TABS_HEIGHT + HEIGHT_MIDDLE_HOME_BTN,
+        }}>
+        <View style={styles.containerItem}>
+          <ItemHomeMenu
+            iconName="cart"
+            title={`Tạo đơn ${'\n'} hàng`}
+            onPress={() => navigation.navigate(NAVIGATION_NAME.ChooseCustomer)}
+          />
+          <ItemHomeMenu
+            iconName="badge-account-horizontal"
+            title={'DS đề xuất đại lý bán lẻ'}
+            onPress={() => navigation.navigate(NAVIGATION_NAME.AgentList)}
+          />
+          <ItemHomeMenu
+            iconName="account-multiple"
+            title={`Thêm mới ${'\n'} khách hàng`}
+            onPress={() => navigation.navigate(NAVIGATION_NAME.AddCustomer)}
+          />
+          <ItemHomeMenu
+            iconName="file-edit"
+            title={`Danh sách giá ${'\n'} thay đổi`}
+            onPress={() => navigation.navigate(NAVIGATION_NAME.ListPriceChange)}
+          />
+          <ItemHomeMenu
+            iconName="file-remove"
+            title={`Thống kê ${'\n'} doanh số`}
+            onPress={() =>
+              navigation.navigate(NAVIGATION_NAME.CancelOrderStatistic)
+            }
+          />
+          <ItemHomeMenu
+            iconName="bag-personal"
+            title="Thống kê doanh số saleman"
+            onPress={() =>
+              navigation.navigate(NAVIGATION_NAME.ListInventoryPeriod)
+            }
+          />
+          <ItemHomeMenu
+            iconName="history"
+            title={`Thay đổi ${'\n'} cửa hàng`}
+            onPress={() =>
+              navigation.navigate(NAVIGATION_NAME.ChangeStore, {
+                fromScreen: NAVIGATION_NAME.HomeScreen,
+              })
+            }
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 
@@ -223,7 +231,7 @@ const styles = {
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    marginTop: 12,
+    marginTop: 20,
     marginHorizontal: 12,
     borderRadius: 12,
   },

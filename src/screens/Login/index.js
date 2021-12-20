@@ -26,11 +26,16 @@ import SimpleToast from 'react-native-simple-toast';
 import {NAVIGATION_NAME} from '../../navigations';
 
 const LoginScreen = ({navigation}) => {
-  const [employeeCode, setEmployeeCode] = useState();
-  const [password, setPassword] = useState();
+  const accountUser = useSelector(
+    state => state.AuthenOverallReducer.accountUser,
+  );
+  const [employeeCode, setEmployeeCode] = useState(accountUser.username);
+  const [password, setPassword] = useState(accountUser.password);
   const [showPass, setShowPass] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [toggleCheckBox, setToggleCheckBox] = useState(
+    accountUser.password ? true : false,
+  );
 
   const dispatch = useDispatch();
 
@@ -41,6 +46,7 @@ const LoginScreen = ({navigation}) => {
       username: employeeCode,
       password: password,
     };
+
     const responseLogin = await ServiceHandle.post(Const.API.Login, params);
     try {
       if (responseLogin.data) {
@@ -49,6 +55,22 @@ const LoginScreen = ({navigation}) => {
         ServiceHandle.setHeader(apiKey);
 
         dispatch(AuthenOverallRedux.Actions.setCookies(apiKey));
+
+        if (toggleCheckBox) {
+          dispatch(
+            AuthenOverallRedux.Actions.setAccount({
+              username: employeeCode,
+              password: password,
+            }),
+          );
+        } else {
+          dispatch(
+            AuthenOverallRedux.Actions.setAccount({
+              username: employeeCode,
+              password: '',
+            }),
+          );
+        }
 
         navigation.navigate(NAVIGATION_NAME.ChangeStore, {
           fromScreen: NAVIGATION_NAME.LoginScreen,
@@ -112,6 +134,7 @@ const LoginScreen = ({navigation}) => {
             style={styles.containerInput}
             mode="outlined"
             autoCapitalize="none"
+            // defaultValue={accountUser.username}
           />
           <TextInput
             label={trans('password')}
@@ -121,6 +144,7 @@ const LoginScreen = ({navigation}) => {
             mode="outlined"
             autoCapitalize="none"
             secureTextEntry={showPass}
+            // defaultValue={accountUser.password}
             right={
               <TextInput.Icon
                 onPress={() => setShowPass(!showPass)}
@@ -133,6 +157,7 @@ const LoginScreen = ({navigation}) => {
             <CheckBox
               value={toggleCheckBox}
               onValueChange={newValue => setToggleCheckBox(newValue)}
+              tintColors={{true: Colors.PRIMARY, false: Colors.GRAY}}
             />
             <AppText style={{marginLeft: 8}}>Ghi nhớ mật khẩu</AppText>
           </View>

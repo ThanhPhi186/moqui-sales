@@ -17,6 +17,8 @@ export const handleStatus = status => {
       return 'Hold';
     case 'OrderBeingChanged': // Giữ đơn
       return 'Being Changed';
+    case 'OrderCancelled': // Huỷ đơn
+      return 'Cancelled';
   }
 };
 

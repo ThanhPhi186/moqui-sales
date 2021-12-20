@@ -15,16 +15,16 @@ import {AppText} from '../../components/atoms';
 import {Colors} from '../../styles';
 import {images} from '../../assets';
 import SimpleToast from 'react-native-simple-toast';
-// import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-community/clipboard';
 
 const ShareScreen = () => {
   const userInfo = useSelector(state => state.AuthenOverallReducer.userAuthen);
 
   const coppyText = () => {
-    // Clipboard.setString(
-    //   'https://play.google.com/store/apps/details?id=com.mont_e',
-    // );
-    // SimpleToast.show('Sao chép mã giới thiệu thành công', SimpleToast.SHORT);
+    Clipboard.setString(
+      'https://play.google.com/store/apps/details?id=com.mont_e',
+    );
+    SimpleToast.show('Sao chép mã giới thiệu thành công', SimpleToast.SHORT);
   };
 
   return (
