@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Appbar} from 'react-native-paper';
-import {AppDialog, ItemInfo} from '../../../../components/molecules';
+import {ItemInfo} from '../../../../components/molecules';
 import {Const, trans} from '../../../../utils';
 import styles from './styles';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import {post} from '../../../../services/ServiceHandle';
 import {AuthenOverallRedux} from '../../../../redux/authen';
 import SimpleToast from 'react-native-simple-toast';
 import {ServiceHandle} from '../../../../services';
+import numeral from 'numeral';
 
 const PromotionDetail = ({navigation, route}) => {
   const {storePromotionId} = route.params;
@@ -38,6 +39,46 @@ const PromotionDetail = ({navigation, route}) => {
     });
   }, [storePromotionId]);
 
+  const renderPromotionName = (id, value) => {
+    const parameterName = value.replace(`${id}.`, '');
+    switch (parameterName) {
+      case 'customerId':
+        return 'Khách hàng';
+      case 'partyClassificationId':
+        return 'Nhóm khách hàng';
+      case 'grandTotalFrom':
+        return 'Tổng giá trị đơn hàng từ';
+      case 'grandTotalTo':
+        return 'Tổng giá trị đơn hàng đến';
+      case 'productId':
+        return 'Sản phẩm';
+      case 'productQuantity':
+        return 'Số lượng';
+      case 'discountValue':
+        return 'Giá trị thưởng';
+      case 'discountPercent':
+        return 'Phần trăm thưởng';
+      case 'discountProductId':
+        return 'Mã sản phẩm được thưởng';
+      case 'discountProductQuantity':
+        return 'Số lượng sản phẩm thưởng';
+    }
+  };
+
+  const renderPromotionValue = (id, name, value) => {
+    const parameterName = name.replace(`${id}.`, '');
+    if (
+      parameterName === 'grandTotalFrom' ||
+      parameterName === 'grandTotalTo' ||
+      parameterName === 'discountValue'
+    ) {
+      return numeral(value).format() + ' đ';
+    }
+    if (parameterName === 'discountPercent') {
+      return numeral(value).format() + ' %';
+    }
+    return value;
+  };
   return (
     <View style={styles.container}>
       <Appbar.Header>
@@ -70,23 +111,21 @@ const PromotionDetail = ({navigation, route}) => {
           {rules.map((elm, index) => {
             return (
               <View key={index}>
-                <AppText style={styles.title}>{elm.parameterName}</AppText>
-                <AppText>{elm.parameterValue}</AppText>
+                <AppText style={styles.title}>
+                  {renderPromotionName(elm.storePromotionId, elm.parameterName)}{' '}
+                  :{' '}
+                  {renderPromotionValue(
+                    elm.storePromotionId,
+                    elm.parameterName,
+                    elm.parameterValue,
+                  )}
+                </AppText>
+                {/* <AppText>{elm.parameterValue}</AppText> */}
               </View>
             );
           })}
         </View>
       </View>
-      <AppDialog
-        content={trans('expiredToken')}
-        isVisible={modalLogout}
-        onPressClose={() => {
-          setModalLogout(false);
-          setTimeout(() => {
-            dispatch(AuthenOverallRedux.Actions.logout.request());
-          }, 500);
-        }}
-      />
     </View>
   );
 };

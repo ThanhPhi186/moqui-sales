@@ -256,10 +256,10 @@ const SelectProduct = ({navigation, route}) => {
         position => {
           const params = {
             customerId: customer.partyId,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            // latitude: 20.9897377,
-            // longitude: 105.8182346,
+            // latitude: position.coords.latitude,
+            // longitude: position.coords.longitude,
+            latitude: 20.9934524,
+            longitude: 105.7865343,
           };
 
           ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {

@@ -66,18 +66,15 @@ const ItemCustomer = props => {
             <Button mode="text" onPress={onNearDate}>
               {trans('nearDate')}
             </Button>
-            {item.checkInOk !== 'Y' ||
-              (item.checkOutOk !== 'Y' && (
-                <Button
-                  icon="map-marker"
-                  mode="text"
-                  labelStyle={styles.txtBtn}
-                  onPress={checkInAndCheckOut}>
-                  {item.checkInOk === 'N'
-                    ? trans('checkin')
-                    : trans('checkout')}
-                </Button>
-              ))}
+            {item.checkInOk === 'Y' && item.checkOutOk === 'Y' ? null : (
+              <Button
+                icon="map-marker"
+                mode="text"
+                labelStyle={styles.txtBtn}
+                onPress={checkInAndCheckOut}>
+                {item.checkInOk === 'N' ? trans('checkin') : trans('checkout')}
+              </Button>
+            )}
             <Button
               icon="store"
               mode="text"
