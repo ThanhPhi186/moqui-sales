@@ -211,6 +211,11 @@ const SelectProduct = ({navigation, route}) => {
         return elm;
       });
       setListChooseProduct(newData);
+    } else {
+      const newData = [...listChooseProduct].filter(
+        elm => elm.productId !== item.productId,
+      );
+      setListChooseProduct(newData);
     }
   };
 

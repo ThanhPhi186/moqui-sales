@@ -52,10 +52,8 @@ const ListPriceChange = ({navigation}) => {
   const renderItem = item => {
     return (
       <View style={styles.containerItem}>
-        <AppText style={styles.nameProduct}>
-          {item.internalName || item.productName}
-        </AppText>
-        <AppText style={styles.txtInfo}>{item.productId}</AppText>
+        <AppText style={styles.nameProduct}>{item.productId}</AppText>
+        <AppText style={styles.txtInfo}>{item.productStoreId}</AppText>
         <View style={styles.viewRow}>
           <AppText style={styles.txtInfo}>
             {/* {numeral(item.priceVAT).format('0,0')}đ -  */}

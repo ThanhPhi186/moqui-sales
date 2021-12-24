@@ -14,9 +14,13 @@ const styles = {
     },
     description: {
       fontWeight: 'bold',
+      color: Colors.BLACK,
     },
     predefinedPlacesDescription: {
       color: Colors.PRIMARY,
+    },
+    textInput: {
+      color: Colors.BLACK,
     },
   },
   marker: {

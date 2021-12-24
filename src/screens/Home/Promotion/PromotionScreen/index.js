@@ -88,10 +88,10 @@ const PromotionScreen = ({navigation}) => {
         <View style={styles.left}>
           <FastImage source={images.discount} style={{width: 50, height: 50}} />
           <View style={{marginLeft: 12, flex: 1}}>
-            <Text style={styles.textTitle}>{item.itemDescription}</Text>
-            <Text style={styles.textPrice}>
+            <AppText style={styles.textTitle}>{item.itemDescription}</AppText>
+            <AppText style={styles.textPrice}>
               HSD: {moment(item.thruDate).format('DD.MM.YYYY')}
-            </Text>
+            </AppText>
           </View>
         </View>
 
