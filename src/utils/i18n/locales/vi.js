@@ -202,7 +202,6 @@ export default {
   applicableCategory: 'Danh mục áp dụng',
   CancelOrderStatistic: 'Thống kê huỷ hàng',
   CashierLoginHistory: 'Lịch sử đăng nhập thu ngân',
-
   searchSupplier: 'Tìm kiếm nhà cung cấp',
   purchaseOrder: 'Đơn hàng mua',
   cancelOrder: 'Huỷ đơn',
@@ -241,4 +240,5 @@ export default {
   notCustomer: 'Chưa có khách hàng',
   updateInventory: 'Cập nhật tồn kho',
   content: 'Nội dung',
+  passwordNotMatch: 'Nhập lại mật khẩu không khớp',
 };

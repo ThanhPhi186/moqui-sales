@@ -6,24 +6,16 @@ import {
   ChangePassword,
   MainAccount,
   ChangeStore,
-  ListPO,
   SearchProductScreen,
   ListPriceChange,
-  ListPricePolicy,
-  DetailPricePolicy,
   CancelOrderStatistic,
-  CashierLoginHistory,
   SelectProduct,
   ConfirmOrder,
-  DetailPO,
-  EditPO,
   ListInventoryPeriod,
   DetailInventoryPeriod,
   ListLocation,
   ContactScreen,
   ShareScreen,
-  ImportItem,
-  ListApplicableStore,
   ChooseCustomer,
   PromotionScreen,
   LookUpProduct,
@@ -61,19 +53,12 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.ChooseCustomer ||
       routeName === NAVIGATION_NAME.SearchProductScreen ||
       routeName === NAVIGATION_NAME.ListPriceChange ||
-      routeName === NAVIGATION_NAME.ListPricePolicy ||
-      routeName === NAVIGATION_NAME.DetailPricePolicy ||
       routeName === NAVIGATION_NAME.CancelOrderStatistic ||
-      routeName === NAVIGATION_NAME.CashierLoginHistory ||
       routeName === NAVIGATION_NAME.SelectProduct ||
       routeName === NAVIGATION_NAME.ConfirmOrder ||
-      routeName === NAVIGATION_NAME.DetailPO ||
-      routeName === NAVIGATION_NAME.EditPO ||
       routeName === NAVIGATION_NAME.ListInventoryPeriod ||
       routeName === NAVIGATION_NAME.DetailInventoryPeriod ||
       routeName === NAVIGATION_NAME.ListLocation ||
-      routeName === NAVIGATION_NAME.ImportItem ||
-      routeName === NAVIGATION_NAME.ListApplicableStore ||
       routeName === NAVIGATION_NAME.PromotionScreen ||
       routeName === NAVIGATION_NAME.LookUpProduct ||
       routeName === NAVIGATION_NAME.ListSaleOrderScreen ||
@@ -130,8 +115,6 @@ const BottomTabNavigator = () => {
           name={NAVIGATION_NAME.ChooseCustomer}
           component={ChooseCustomer}
         />
-        <Stack.Screen name={NAVIGATION_NAME.DetailPO} component={DetailPO} />
-        <Stack.Screen name={NAVIGATION_NAME.EditPO} component={EditPO} />
         <Stack.Screen
           name={NAVIGATION_NAME.SearchProductScreen}
           component={SearchProductScreen}
@@ -140,21 +123,10 @@ const BottomTabNavigator = () => {
           name={NAVIGATION_NAME.ListPriceChange}
           component={ListPriceChange}
         />
-        <Stack.Screen
-          name={NAVIGATION_NAME.ListPricePolicy}
-          component={ListPricePolicy}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.DetailPricePolicy}
-          component={DetailPricePolicy}
-        />
+
         <Stack.Screen
           name={NAVIGATION_NAME.CancelOrderStatistic}
           component={CancelOrderStatistic}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.CashierLoginHistory}
-          component={CashierLoginHistory}
         />
 
         <Stack.Screen
@@ -177,14 +149,7 @@ const BottomTabNavigator = () => {
           name={NAVIGATION_NAME.ListLocation}
           component={ListLocation}
         />
-        <Stack.Screen
-          name={NAVIGATION_NAME.ImportItem}
-          component={ImportItem}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.ListApplicableStore}
-          component={ListApplicableStore}
-        />
+
         <Stack.Screen
           name={NAVIGATION_NAME.PromotionScreen}
           component={PromotionScreen}

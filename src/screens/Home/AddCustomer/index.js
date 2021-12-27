@@ -30,7 +30,6 @@ Geocoder.init(Const.GOOGLE_MAP_API);
 const AddCustomer = ({navigation}) => {
   const BaseUrl = useSelector(state => state.AuthenOverallReducer.domain);
 
-  const [avatar, setAvatar] = useState('');
   const [dateOfBirth, setDateOfBird] = useState(moment().format('DD/MM/YYYY'));
   const [startDate, setStartDate] = useState(moment().format('DD/MM/YYYY'));
   const [gender, setGender] = useState('M');
@@ -80,7 +79,6 @@ const AddCustomer = ({navigation}) => {
     if (location) {
       Geocoder.from(location?.latitude, location?.longitude)
         .then(res => {
-          console.log('ressss', res);
           setAddress(res.results[0]);
           setAddressDetail(
             res.results[0].address_components.filter(
@@ -129,29 +127,6 @@ const AddCustomer = ({navigation}) => {
     );
   };
 
-  // const options = {
-  //   title: 'Select Avatar',
-  //   storageOptions: {
-  //     skipBackup: true,
-  //     path: 'images',
-  //   },
-  // };
-
-  // const openImagePicker = () => {
-  //   ImagePicker.showImagePicker(options, (response) => {
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else {
-  //       const source = {uri: response.uri};
-  //       // You can also display the image using data:
-  //       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-  //       setAvatar(source);
-  //     }
-  //   });
-  // };
-
   const handelCheckValue = () => {
     if (!customerName) {
       setErrMessage(trans('storeOwnerNameNotEmpty'));
@@ -181,23 +156,6 @@ const AddCustomer = ({navigation}) => {
       setModalError(true);
       return;
     }
-    // partyCode;
-    // fullName;
-    // productStoreId;
-    // gender;
-    // note;
-    // officeSiteName;
-    // salesmanId;
-    // routeId;
-    // countryGeoId;
-    // stateProvinceGeoId;
-    // districtId;
-    // wardId;
-    // tarAddress;
-    // telecomNumber;
-    // emailAddress;
-    // latitude;
-    // longitude;
 
     const params = {
       fullName: customerName, //done
@@ -219,18 +177,18 @@ const AddCustomer = ({navigation}) => {
       countryGeoName: 'Việt Nam',
     };
     console.log('params', params);
-    ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
-      if (res.ok) {
-        Toast.show({
-          type: 'success',
-          text1: 'Thêm mới khach hàng thành công 👋',
-          visibilityTime: 2000,
-        });
-        navigation.goBack();
-      } else {
-        SimpleToast.show(res.error, SimpleToast.SHORT);
-      }
-    });
+    // ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
+    //   if (res.ok) {
+    //     Toast.show({
+    //       type: 'success',
+    //       text1: 'Thêm mới khach hàng thành công 👋',
+    //       visibilityTime: 2000,
+    //     });
+    //     navigation.goBack();
+    //   } else {
+    //     SimpleToast.show(res.error, SimpleToast.SHORT);
+    //   }
+    // });
   };
 
   return (
@@ -244,27 +202,6 @@ const AddCustomer = ({navigation}) => {
         <Appbar.Action icon="telegram" onPress={createCustomer} />
       </Appbar.Header>
       <View style={styles.content}>
-        {/* <View
-          style={[
-            {flexDirection: 'row'},
-            Platform.OS === 'ios' && {zIndex: 1},
-          ]}> */}
-        {/* <View style={{flex: 1, alignItems: 'center', paddingRight: 12}}>
-            <FastImage
-              source={avatar ? avatar : images.noImage}
-              style={{width: '100%', height: 100}}
-              resizeMode="stretch"
-            />
-            <Button
-              mode="contained"
-              onPress={() => openImagePicker()}
-              color={Colors.PRIMARY}
-              labelStyle={{fontWeight: 'bold', fontSize: FONT_SIZE_12}}
-              style={styles.btnUpLoad}>
-              {trans('upload')}
-            </Button>
-          </View> */}
-        {/* <View style={{flex: 1.5}}> */}
         <FormInput
           title={trans('storeOwnerName')}
           isRequired
@@ -296,8 +233,6 @@ const AddCustomer = ({navigation}) => {
           onChangeText={setPhoneNumber}
           keyboardType="numeric"
         />
-        {/* </View> */}
-        {/* </View> */}
         <FormInput
           title={trans('storeName')}
           isRequired

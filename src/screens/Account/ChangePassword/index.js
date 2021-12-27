@@ -1,16 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import {Appbar, TextInput} from 'react-native-paper';
-import SimpleToast from 'react-native-simple-toast';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {AppDialog, Button} from '../../../components/molecules';
 import {AuthenOverallRedux, StoreRedux} from '../../../redux';
-
 import {ServiceHandle} from '../../../services';
-
 import {Colors} from '../../../styles';
 import {Const, trans} from '../../../utils';
-
 import styles from './styles';
 import Toast from 'react-native-toast-message';
 
@@ -28,6 +24,10 @@ const ChangePassword = ({navigation}) => {
       setMessErr(trans('doNotEmptyPassword'));
       return true;
     }
+    if (newPassword !== passwordVerify) {
+      setMessErr(trans('passwordNotMatch'));
+      return true;
+    }
     return false;
   };
 
@@ -43,17 +43,23 @@ const ChangePassword = ({navigation}) => {
     };
     ServiceHandle.post(Const.API.UpdatePasswordMobile, params).then(res => {
       if (res.ok) {
-        Toast.show({
-          type: 'success',
-          text1: trans('changePassSuccess'),
-          visibilityTime: 2000,
-        });
-
-        // dispatch(AuthenOverallRedux.Actions.logout.request());
-        // dispatch(StoreRedux.Actions.changeStore(''));
-        // ServiceHandle.setHeader('');
+        if (res.data.updateSuccessful === true) {
+          Toast.show({
+            type: 'success',
+            text1: trans('changePassSuccess'),
+            visibilityTime: 2000,
+          });
+        } else {
+          setMessErr(res.data.messages);
+          setModalError(true);
+        }
+        dispatch(AuthenOverallRedux.Actions.logout.request());
+        dispatch(StoreRedux.Actions.changeStore(''));
+        ServiceHandle.setHeader('');
       } else {
-        setMessErr(res.error);
+        setMessErr(
+          'Cần nhập chính xác mật khẩu cũ và không được trùng với 5 lần gần nhất',
+        );
         setModalError(true);
       }
     });

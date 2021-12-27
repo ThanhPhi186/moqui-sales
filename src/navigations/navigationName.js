@@ -7,23 +7,16 @@ const NAVIGATION_NAME = {
   HomeScreen: 'HomeScreen',
   SearchProductScreen: 'SearchProductScreen',
   ListPriceChange: 'ListPriceChange',
-  ListPricePolicy: 'ListPricePolicy',
-  DetailPricePolicy: 'DetailPricePolicy',
+
   CancelOrderStatistic: 'CancelOrderStatistic',
-  CashierLoginHistory: 'CashierLoginHistory',
   ConfirmOrder: 'ConfirmOrder',
   SelectProduct: 'SelectProduct',
 
-  ListPO: 'ListPO',
-  DetailPO: 'DetailPO',
-  EditPO: 'EditPO',
   ListInventoryPeriod: 'ListInventoryPeriod',
   DetailInventoryPeriod: 'DetailInventoryPeriod',
   ListLocation: 'ListLocation',
   ContactScreen: 'ContactScreen',
   ShareScreen: 'ShareScreen',
-  ImportItem: 'ImportItem',
-  ListApplicableStore: 'ListApplicableStore',
 
   //update
   ChooseCustomer: 'ChooseCustomer',
