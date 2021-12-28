@@ -8,13 +8,9 @@ const NAVIGATION_NAME = {
   SearchProductScreen: 'SearchProductScreen',
   ListPriceChange: 'ListPriceChange',
 
-  CancelOrderStatistic: 'CancelOrderStatistic',
   ConfirmOrder: 'ConfirmOrder',
   SelectProduct: 'SelectProduct',
 
-  ListInventoryPeriod: 'ListInventoryPeriod',
-  DetailInventoryPeriod: 'DetailInventoryPeriod',
-  ListLocation: 'ListLocation',
   ContactScreen: 'ContactScreen',
   ShareScreen: 'ShareScreen',
 
@@ -31,6 +27,8 @@ const NAVIGATION_NAME = {
   RecentDate: 'RecentDate',
   Inventory: 'Inventory',
   PromotionDetail: 'PromotionDetail',
+  SalesmanReport: 'SalesmanReport',
+  ShopReport: 'ShopReport',
 };
 
 export default NAVIGATION_NAME;

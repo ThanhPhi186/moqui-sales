@@ -22,6 +22,7 @@ const styles = {
     borderRadius: 8,
     backgroundColor: Colors.WHITE,
     paddingHorizontal: 8,
+    color: Colors.BLACK,
   },
   btn: {
     width: '100%',

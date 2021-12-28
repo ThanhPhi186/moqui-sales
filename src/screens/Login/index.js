@@ -14,12 +14,9 @@ import {AuthenOverallRedux} from '../../redux';
 import AppText from '../../components/atoms/AppText';
 import {AppLoading} from '../../components/atoms';
 import {Colors} from '../../styles';
-
 import {device_height, device_width} from '../../styles/Mixin';
-
 import {TextInput} from 'react-native-paper';
 import CheckBox from '@react-native-community/checkbox';
-
 import {Const} from '../../utils';
 import {ServiceHandle} from '../../services';
 import SimpleToast from 'react-native-simple-toast';

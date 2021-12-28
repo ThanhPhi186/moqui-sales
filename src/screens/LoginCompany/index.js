@@ -4,12 +4,12 @@ import {trans} from '../../utils/i18n';
 import styles from './styles';
 import {images} from '../../assets';
 import {AppText} from '../../components/atoms';
-
 import SimpleToast from 'react-native-simple-toast';
 import {Const} from '../../utils';
 import {useDispatch} from 'react-redux';
 import AuthenOverallRedux from '../../redux/authen';
 import {ServiceHandle} from '../../services';
+import {Colors} from '../../styles';
 
 const LoginCompanyScreen = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,9 @@ const LoginCompanyScreen = () => {
         onChangeText={text => setCompanyCode(text)}
         placeholder={trans('enterCompanyCode')}
         autoCapitalize="none"
+        placeholderTextColor={Colors.PLACE_HOLDER}
       />
+
       <TouchableOpacity
         style={styles.btn}
         mode="text"

@@ -42,9 +42,12 @@ const store = createStore(reducers, undefined, compose(...enhancers));
 const persistor = persistStore(store, persistConfig, () => {
   const stateData = store.getState();
 
+  // if (stateData.AuthenOverallReducer.domain) {
+  //   ServiceHandle.setBaseUrl(stateData.AuthenOverallReducer.domain);
+  // }
+
   if (stateData.AuthenOverallReducer.cookies) {
     ServiceHandle.setHeader(stateData.AuthenOverallReducer.cookies);
-    // ServiceHandle.setHeader('bBneUokaxmAht5thCarrzHfWh8JTVLPNmfbNOE');
   }
 });
 

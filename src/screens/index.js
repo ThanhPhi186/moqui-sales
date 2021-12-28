@@ -4,12 +4,8 @@ import {
   HomeScreen,
   SearchProductScreen,
   ListPriceChange,
-  CancelOrderStatistic,
   ConfirmOrder,
   SelectProduct,
-  ListInventoryPeriod,
-  DetailInventoryPeriod,
-  ListLocation,
   ChooseCustomer,
   PromotionScreen,
   LookUpProduct,
@@ -20,6 +16,8 @@ import {
   AddCustomer,
   RecentDate,
   Inventory,
+  SalesmanReport,
+  ShopReport,
 } from './Home';
 import {MainAccount, ChangePassword, ChangeStore} from './Account';
 import ContactScreen from './ContactScreen';
@@ -36,12 +34,8 @@ export {
   ChangeStore,
   SearchProductScreen,
   ListPriceChange,
-  CancelOrderStatistic,
   ConfirmOrder,
   SelectProduct,
-  ListInventoryPeriod,
-  DetailInventoryPeriod,
-  ListLocation,
   ShareScreen,
   ContactScreen,
   RootView,
@@ -56,4 +50,6 @@ export {
   MapScreen,
   RecentDate,
   Inventory,
+  SalesmanReport,
+  ShopReport,
 };

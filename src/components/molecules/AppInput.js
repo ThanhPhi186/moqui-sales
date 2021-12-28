@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import {TextInput, TouchableOpacity, View} from 'react-native';
-
-import {images} from '../../assets';
 import {Colors, Mixin} from '../../styles';
-import {FONT_SIZE_14} from '../../styles/Typography';
-import {AppImage} from '../atoms';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AppInput = props => {

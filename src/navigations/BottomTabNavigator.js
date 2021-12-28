@@ -8,12 +8,8 @@ import {
   ChangeStore,
   SearchProductScreen,
   ListPriceChange,
-  CancelOrderStatistic,
   SelectProduct,
   ConfirmOrder,
-  ListInventoryPeriod,
-  DetailInventoryPeriod,
-  ListLocation,
   ContactScreen,
   ShareScreen,
   ChooseCustomer,
@@ -27,6 +23,8 @@ import {
   MapScreen,
   RecentDate,
   Inventory,
+  ShopReport,
+  SalesmanReport,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CustomButtonTab} from '../components/molecules';
@@ -53,12 +51,8 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.ChooseCustomer ||
       routeName === NAVIGATION_NAME.SearchProductScreen ||
       routeName === NAVIGATION_NAME.ListPriceChange ||
-      routeName === NAVIGATION_NAME.CancelOrderStatistic ||
       routeName === NAVIGATION_NAME.SelectProduct ||
       routeName === NAVIGATION_NAME.ConfirmOrder ||
-      routeName === NAVIGATION_NAME.ListInventoryPeriod ||
-      routeName === NAVIGATION_NAME.DetailInventoryPeriod ||
-      routeName === NAVIGATION_NAME.ListLocation ||
       routeName === NAVIGATION_NAME.PromotionScreen ||
       routeName === NAVIGATION_NAME.LookUpProduct ||
       routeName === NAVIGATION_NAME.ListSaleOrderScreen ||
@@ -70,7 +64,9 @@ const BottomTabNavigator = () => {
       routeName === NAVIGATION_NAME.RecentDate ||
       routeName === NAVIGATION_NAME.Inventory ||
       routeName === NAVIGATION_NAME.ChangeStore ||
-      routeName === NAVIGATION_NAME.PromotionDetail
+      routeName === NAVIGATION_NAME.PromotionDetail ||
+      routeName === NAVIGATION_NAME.ShopReport ||
+      routeName === NAVIGATION_NAME.SalesmanReport
     ) {
       return false;
     }
@@ -125,29 +121,12 @@ const BottomTabNavigator = () => {
         />
 
         <Stack.Screen
-          name={NAVIGATION_NAME.CancelOrderStatistic}
-          component={CancelOrderStatistic}
-        />
-
-        <Stack.Screen
           name={NAVIGATION_NAME.SelectProduct}
           component={SelectProduct}
         />
         <Stack.Screen
           name={NAVIGATION_NAME.ConfirmOrder}
           component={ConfirmOrder}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.ListInventoryPeriod}
-          component={ListInventoryPeriod}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.DetailInventoryPeriod}
-          component={DetailInventoryPeriod}
-        />
-        <Stack.Screen
-          name={NAVIGATION_NAME.ListLocation}
-          component={ListLocation}
         />
 
         <Stack.Screen
@@ -188,6 +167,14 @@ const BottomTabNavigator = () => {
         <Stack.Screen
           name={NAVIGATION_NAME.PromotionDetail}
           component={PromotionDetail}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.SalesmanReport}
+          component={SalesmanReport}
+        />
+        <Stack.Screen
+          name={NAVIGATION_NAME.ShopReport}
+          component={ShopReport}
         />
       </Stack.Navigator>
     );

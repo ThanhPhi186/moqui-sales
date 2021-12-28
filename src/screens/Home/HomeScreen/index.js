@@ -147,16 +147,12 @@ const HomeScreen = ({navigation}) => {
           <ItemHomeMenu
             iconName="file-remove"
             title={`Thống kê ${'\n'} doanh số`}
-            onPress={() =>
-              navigation.navigate(NAVIGATION_NAME.CancelOrderStatistic)
-            }
+            onPress={() => navigation.navigate(NAVIGATION_NAME.ShopReport)}
           />
           <ItemHomeMenu
             iconName="bag-personal"
             title="Thống kê doanh số saleman"
-            onPress={() =>
-              navigation.navigate(NAVIGATION_NAME.ListInventoryPeriod)
-            }
+            onPress={() => navigation.navigate(NAVIGATION_NAME.SalesmanReport)}
           />
           <ItemHomeMenu
             iconName="history"
