@@ -10,7 +10,7 @@ import {
   HEIGHT_MIDDLE_HOME_BTN,
   NAVIGATION_BOTTOM_TABS_HEIGHT,
 } from '../../styles/GlobalStyles';
-import {Const, trans} from '../../utils';
+import {trans} from '../../utils';
 import {AppText} from '../../components/atoms';
 import {Colors} from '../../styles';
 import {images} from '../../assets';

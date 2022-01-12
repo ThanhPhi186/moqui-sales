@@ -49,7 +49,9 @@ const OrderDetailScreen = ({navigation, route}) => {
             {numeral(item.unitAmount).format()} đ
           </AppText>
         </View>
-        <AppText containerStyle={styles.boxAmount}>{item.quantity}</AppText>
+        <AppText containerStyle={styles.boxAmount}>
+          {item.quantityCancelled}
+        </AppText>
       </View>
     );
   };

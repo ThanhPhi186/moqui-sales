@@ -6,9 +6,6 @@ import {Const, trans} from '../../../../utils';
 import styles from './styles';
 import moment from 'moment';
 import {AppText} from '../../../../components/atoms';
-import {useDispatch, useSelector} from 'react-redux';
-import {post} from '../../../../services/ServiceHandle';
-import {AuthenOverallRedux} from '../../../../redux/authen';
 import SimpleToast from 'react-native-simple-toast';
 import {ServiceHandle} from '../../../../services';
 import numeral from 'numeral';
@@ -18,10 +15,8 @@ const PromotionDetail = ({navigation, route}) => {
 
   const [rules, setRules] = useState([]);
   const [dataDetail, setDataDetail] = useState({});
-  const [modalLogout, setModalLogout] = useState(false);
-  const dispatch = useDispatch();
 
-  console.log('basicInfo', storePromotionId);
+  console.log('rules', rules);
 
   useEffect(() => {
     const params = {
@@ -108,7 +103,7 @@ const PromotionDetail = ({navigation, route}) => {
         </View>
         <AppText style={styles.title}>{trans('applicableLaw')}</AppText>
         <View style={styles.containerItem}>
-          {rules.map((elm, index) => {
+          {rules.discounts?.map((elm, index) => {
             return (
               <View key={index}>
                 <AppText style={styles.title}>
@@ -120,7 +115,21 @@ const PromotionDetail = ({navigation, route}) => {
                     elm.parameterValue,
                   )}
                 </AppText>
-                {/* <AppText>{elm.parameterValue}</AppText> */}
+              </View>
+            );
+          })}
+          {rules.rules?.map((elm, index) => {
+            return (
+              <View key={index}>
+                <AppText style={styles.title}>
+                  {renderPromotionName(elm.storePromotionId, elm.parameterName)}{' '}
+                  :{' '}
+                  {renderPromotionValue(
+                    elm.storePromotionId,
+                    elm.parameterName,
+                    elm.parameterValue,
+                  )}
+                </AppText>
               </View>
             );
           })}

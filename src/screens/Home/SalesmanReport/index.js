@@ -1,16 +1,31 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Appbar} from 'react-native-paper';
+import SimpleToast from 'react-native-simple-toast';
 import {useSelector} from 'react-redux';
 import {AppLoading, AppText} from '../../../components/atoms';
+import {ServiceHandle} from '../../../services';
 import {Colors, Mixin} from '../../../styles';
 import {container} from '../../../styles/GlobalStyles';
 import {FONT_SIZE_16} from '../../../styles/Typography';
+import {Const} from '../../../utils';
 
 const SalesmanReport = ({navigation}) => {
   const store = useSelector(state => state.StoreReducer.store);
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getSalesman = () => {
+      ServiceHandle.get(Const.API.GetTurnoverBySalesmanReports).then(res => {
+        if (res.ok) {
+        } else {
+          SimpleToast.show(res.error, SimpleToast.SHORT);
+        }
+      });
+    };
+    getSalesman();
+  }, []);
 
   return (
     <View style={container}>

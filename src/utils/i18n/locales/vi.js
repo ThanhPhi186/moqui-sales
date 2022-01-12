@@ -241,4 +241,5 @@ export default {
   updateInventory: 'Cập nhật tồn kho',
   content: 'Nội dung',
   passwordNotMatch: 'Nhập lại mật khẩu không khớp',
+  revenue: 'Doanh thu',
 };

@@ -99,8 +99,8 @@ const ChooseCustomer = ({navigation, route}) => {
       case 'ScoreDisplayCumulative':
         navigation.navigate('ScoreDisplayCumulative', {item});
         break;
-      case 'ShopStatistic':
-        navigation.navigate('ShopStatistic', {item});
+      case NAVIGATION_NAME.ShopReport:
+        navigation.navigate(NAVIGATION_NAME.ShopReport, {item});
         break;
       default:
         navigation.navigate(NAVIGATION_NAME.SelectProduct, {item});

@@ -6,14 +6,10 @@ import {Appbar, TextInput as Input} from 'react-native-paper';
 import styles from './styles';
 
 import moment from 'moment';
-
 import {useDispatch, useSelector} from 'react-redux';
-
 import SimpleToast from 'react-native-simple-toast';
 import Geocoder from 'react-native-geocoding';
-
 import Geolocation from 'react-native-geolocation-service';
-
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Const, trans} from '../../../utils';
 import {ServiceHandle} from '../../../services';
@@ -21,7 +17,6 @@ import hasLocationPermission from '../../../helpers/LocationHelper';
 import {AuthenOverallRedux} from '../../../redux';
 import {FormInput} from '../../../components/atoms';
 import {AppDialog, Dropdown} from '../../../components/molecules';
-import {ScrollView} from 'react-native-gesture-handler';
 import {NAVIGATION_NAME} from '../../../navigations';
 import Toast from 'react-native-toast-message';
 
@@ -85,11 +80,11 @@ const AddCustomer = ({navigation}) => {
               elm => elm.types.length > 1,
             ),
           );
-
           setAddressWard(
-            res.results[0].address_components.filter(
-              elm => elm.types.length === 1,
-            ),
+            res.results[0].address_components
+              .filter(elm => elm.types.length === 1)
+              .map(elm => elm.long_name)
+              .join(' '),
           );
         })
         .catch(error => SimpleToast.show(error, SimpleToast.SHORT));
@@ -162,7 +157,7 @@ const AddCustomer = ({navigation}) => {
       gender, //done
       officeSiteName: storeName, //done
       telecomNumber: phoneNumber, //done
-      tarAddress: addressWard[0].long_name + ' ' + addressWard[1].long_name, //done
+      tarAddress: addressWard,
       latitude: location.latitude, //done
       longitude: location.longitude, //done
       routeId: rule, //done
@@ -177,18 +172,18 @@ const AddCustomer = ({navigation}) => {
       countryGeoName: 'Việt Nam',
     };
     console.log('params', params);
-    // ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
-    //   if (res.ok) {
-    //     Toast.show({
-    //       type: 'success',
-    //       text1: 'Thêm mới khach hàng thành công 👋',
-    //       visibilityTime: 2000,
-    //     });
-    //     navigation.goBack();
-    //   } else {
-    //     SimpleToast.show(res.error, SimpleToast.SHORT);
-    //   }
-    // });
+    ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
+      if (res.ok) {
+        Toast.show({
+          type: 'success',
+          text1: 'Thêm mới khach hàng thành công 👋',
+          visibilityTime: 2000,
+        });
+        navigation.goBack();
+      } else {
+        SimpleToast.show(res.error, SimpleToast.SHORT);
+      }
+    });
   };
 
   return (

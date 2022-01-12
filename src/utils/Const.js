@@ -33,6 +33,9 @@ export default {
     GetPromoDetail: '/rest/s1/salesnet/getPromoDetail',
     EditOrder: '/rest/s1/salesnet/editOrder',
     CancelOrder: '/rest/s1/salesnet/cancelOrder',
+    GetCustomerReports: '/rest/s1/salesnet/mGetCustomerReports',
+    GetTurnoverBySalesmanReports:
+      '/rest/s1/salesnet/mGetTurnoverBySalesmanReports',
 
     //xxxx
     GetListProductStoreMobileMcs: '/getListProductStoreMobileMcs',

@@ -11,6 +11,7 @@ import {Animated, StyleSheet} from 'react-native';
 import {device_height} from './src/styles/Mixin';
 import {images} from './src/assets';
 import {RootView} from './src/screens';
+import 'react-native-gesture-handler';
 
 const {persistor, store} = configureStore();
 // persistor.purge();
