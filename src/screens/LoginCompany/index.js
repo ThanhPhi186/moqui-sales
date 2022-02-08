@@ -24,7 +24,7 @@ const LoginCompanyScreen = () => {
 
     ServiceHandle.get(Const.API.GetDomain, params).then(res => {
       if (res.data.domain) {
-        const domain = `https://${res.data.domain}/mobilemcs/control`;
+        const domain = `https://${res.data.domain}`;
         ServiceHandle.setBaseUrl(domain);
         dispatch(AuthenOverallRedux.Actions.setDomain(domain));
       } else {

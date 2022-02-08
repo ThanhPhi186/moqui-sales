@@ -16,8 +16,6 @@ const PromotionDetail = ({navigation, route}) => {
   const [rules, setRules] = useState([]);
   const [dataDetail, setDataDetail] = useState({});
 
-  console.log('rules', rules);
-
   useEffect(() => {
     const params = {
       storePromotionId,
@@ -34,29 +32,36 @@ const PromotionDetail = ({navigation, route}) => {
     });
   }, [storePromotionId]);
 
-  const renderPromotionName = (id, value) => {
-    const parameterName = value.replace(`${id}.`, '');
-    switch (parameterName) {
-      case 'customerId':
-        return 'Khách hàng';
-      case 'partyClassificationId':
-        return 'Nhóm khách hàng';
-      case 'grandTotalFrom':
-        return 'Tổng giá trị đơn hàng từ';
-      case 'grandTotalTo':
-        return 'Tổng giá trị đơn hàng đến';
-      case 'productId':
-        return 'Sản phẩm';
-      case 'productQuantity':
-        return 'Số lượng';
-      case 'discountValue':
-        return 'Giá trị thưởng';
-      case 'discountPercent':
-        return 'Phần trăm thưởng';
-      case 'discountProductId':
-        return 'Mã sản phẩm được thưởng';
-      case 'discountProductQuantity':
-        return 'Số lượng sản phẩm thưởng';
+  const renderPromotionName = value => {
+    if (value.includes('customerId')) {
+      return 'Khách hàng';
+    }
+    if (value.includes('partyClassificationId')) {
+      return 'Nhóm khách hàng';
+    }
+    if (value.includes('grandTotalFrom')) {
+      return 'Tổng giá trị đơn hàng từ';
+    }
+    if (value.includes('grandTotalTo')) {
+      return 'Tổng giá trị đơn hàng đến';
+    }
+    if (value.includes('productId')) {
+      return 'Sản phẩm';
+    }
+    if (value.includes('productQuantity')) {
+      return 'Số lượng';
+    }
+    if (value.includes('discountValue')) {
+      return 'Giá trị thưởng';
+    }
+    if (value.includes('discountPercent')) {
+      return 'Phần trăm thưởng';
+    }
+    if (value.includes('discountProductId')) {
+      return 'Mã sản phẩm được thưởng';
+    }
+    if (value.includes('discountProductQuantity')) {
+      return 'Số lượng sản phẩm thưởng';
     }
   };
 
@@ -74,6 +79,7 @@ const PromotionDetail = ({navigation, route}) => {
     }
     return value;
   };
+
   return (
     <View style={styles.container}>
       <Appbar.Header>
@@ -101,14 +107,13 @@ const PromotionDetail = ({navigation, route}) => {
             value={moment(dataDetail.thruDate).format('DD-MM-YYYY')}
           />
         </View>
-        <AppText style={styles.title}>{trans('applicableLaw')}</AppText>
+        <AppText style={styles.title}>{trans('promotion')}</AppText>
         <View style={styles.containerItem}>
           {rules.discounts?.map((elm, index) => {
             return (
               <View key={index}>
                 <AppText style={styles.title}>
-                  {renderPromotionName(elm.storePromotionId, elm.parameterName)}{' '}
-                  :{' '}
+                  {renderPromotionName(elm.parameterName)} :{' '}
                   {renderPromotionValue(
                     elm.storePromotionId,
                     elm.parameterName,
@@ -118,12 +123,14 @@ const PromotionDetail = ({navigation, route}) => {
               </View>
             );
           })}
+        </View>
+        <AppText style={styles.title}>{trans('applicableLaw')}</AppText>
+        <View style={styles.containerItem}>
           {rules.rules?.map((elm, index) => {
             return (
               <View key={index}>
                 <AppText style={styles.title}>
-                  {renderPromotionName(elm.storePromotionId, elm.parameterName)}{' '}
-                  :{' '}
+                  {renderPromotionName(elm.parameterName)} :{' '}
                   {renderPromotionValue(
                     elm.storePromotionId,
                     elm.parameterName,
