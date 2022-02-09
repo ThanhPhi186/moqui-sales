@@ -23,7 +23,6 @@ target 'MoquiSales' do
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'react-native-version-check', :path => '../node_modules/react-native-version-check'
 
   # Enables Flipper.
   #

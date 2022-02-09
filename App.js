@@ -66,25 +66,25 @@ const App = () => {
   }, [bootSplashLogoIsLoaded]);
 
   useEffect(() => {
-    VersionCheck.getLatestVersion({
-      provider: 'appStore', // for iOS
-    }).then(latestVersion => {
-      console.log(latestVersion); // 0.1.2
-    });
-    // VersionCheck.needUpdate({
-    //   currentVersion: '1.0',
-    //   latestVersion: '2.0',
-    // }).then(async res => {
-    //   if (res.isNeeded) {
-    //     Alert.alert('Có phiên bản mới', 'Vui lòng cập nhật', [
-    //       {
-    //         text: 'OK',
-    //         onPress: async () =>
-    //           Linking.openURL(await VersionCheck.getStoreUrl()),
-    //       },
-    //     ]);
-    //   }
+    // VersionCheck.getLatestVersion({
+    //   provider: 'appStore', // for iOS
+    // }).then(latestVersion => {
+    //   console.log(latestVersion); // 0.1.2
     // });
+    VersionCheck.needUpdate({
+      currentVersion: '1.0',
+      latestVersion: '2.0',
+    }).then(async res => {
+      if (res.isNeeded) {
+        Alert.alert('Có phiên bản mới', 'Vui lòng cập nhật', [
+          {
+            text: 'OK',
+            onPress: async () =>
+              Linking.openURL(await VersionCheck.getStoreUrl()),
+          },
+        ]);
+      }
+    });
   }, []);
 
   return (
