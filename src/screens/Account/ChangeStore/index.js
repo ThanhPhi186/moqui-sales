@@ -88,7 +88,7 @@ const ChangeStore = ({navigation, route}) => {
     <View style={container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={handleBack} />
-        <Appbar.Content title={trans('changeStore')} />
+        <Appbar.Content title={trans('salesChannels')} />
       </Appbar.Header>
 
       <FlatList

@@ -9,14 +9,14 @@ const MainNavigator = () => {
 
   return (
     <NavigationContainer>
-      {store ? <BottomTabNavigator /> : <LoginNavigator />}
-      {/* {!domain ? (
+      {/* {store ? <BottomTabNavigator /> : <LoginNavigator />} */}
+      {!domain ? (
         <CompanyNavigator />
       ) : store ? (
         <BottomTabNavigator />
       ) : (
         <LoginNavigator />
-      )} */}
+      )}
     </NavigationContainer>
   );
 };

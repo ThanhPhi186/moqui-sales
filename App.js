@@ -12,10 +12,10 @@ import {device_height} from './src/styles/Mixin';
 import {images} from './src/assets';
 import {RootView} from './src/screens';
 import 'react-native-gesture-handler';
-import VersionCheck from 'react-native-version-check';
+// import VersionCheck from 'react-native-version-check';
 
 const {persistor, store} = configureStore();
-persistor.purge();
+// persistor.purge();
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -65,27 +65,27 @@ const App = () => {
     bootSplashLogoIsLoaded && init();
   }, [bootSplashLogoIsLoaded]);
 
-  useEffect(() => {
-    // VersionCheck.getLatestVersion({
-    //   provider: 'appStore', // for iOS
-    // }).then(latestVersion => {
-    //   console.log(latestVersion); // 0.1.2
-    // });
-    VersionCheck.needUpdate({
-      currentVersion: '1.0',
-      latestVersion: '2.0',
-    }).then(async res => {
-      if (res.isNeeded) {
-        Alert.alert('Có phiên bản mới', 'Vui lòng cập nhật', [
-          {
-            text: 'OK',
-            onPress: async () =>
-              Linking.openURL(await VersionCheck.getStoreUrl()),
-          },
-        ]);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   // VersionCheck.getLatestVersion({
+  //   //   provider: 'appStore', // for iOS
+  //   // }).then(latestVersion => {
+  //   //   console.log(latestVersion); // 0.1.2
+  //   // });
+  //   VersionCheck.needUpdate({
+  //     currentVersion: '1.0',
+  //     latestVersion: '2.0',
+  //   }).then(async res => {
+  //     if (res.isNeeded) {
+  //       Alert.alert('Có phiên bản mới', 'Vui lòng cập nhật', [
+  //         {
+  //           text: 'OK',
+  //           onPress: async () =>
+  //             Linking.openURL(await VersionCheck.getStoreUrl()),
+  //         },
+  //       ]);
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Provider store={store}>

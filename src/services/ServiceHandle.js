@@ -7,13 +7,17 @@ import configureStore from '../config/store/configureStore';
 
 const api = create({
   timeout: 20000,
-  baseURL: Const.API.baseURL,
+  baseURL: configureStore().store.getState().AuthenOverallReducer.domain,
   headers: {
-    // 'Content-Type': 'application/x-www-form-urlencoded',
     'Content-Type': 'application/json',
   },
   withCredentials: false,
 });
+
+console.log(
+  'service handle',
+  configureStore().store.getState().AuthenOverallReducer.domain,
+);
 
 const logout = () => {
   // console.log('aaaa');

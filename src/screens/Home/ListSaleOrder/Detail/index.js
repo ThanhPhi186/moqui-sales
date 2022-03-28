@@ -10,6 +10,7 @@ import {images} from '../../../../assets';
 import {ItemInfo} from '../../../../components/molecules';
 import SimpleToast from 'react-native-simple-toast';
 import {AppText} from '../../../../components/atoms';
+import {handleStatus, renderColorStatus} from '../../../../helpers/mcsHelper';
 
 const OrderDetailScreen = ({navigation, route}) => {
   const [dataDetail, setDataDetail] = useState();
@@ -50,7 +51,7 @@ const OrderDetailScreen = ({navigation, route}) => {
           </AppText>
         </View>
         <AppText containerStyle={styles.boxAmount}>
-          {item.quantityCancelled}
+          {item.quantity || item.quantityCancelled}
         </AppText>
       </View>
     );
@@ -62,6 +63,19 @@ const OrderDetailScreen = ({navigation, route}) => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('detailOrder')} />
       </Appbar.Header>
+
+      <AppText
+        style={{
+          textAlign: 'center',
+          marginTop: 8,
+          fontSize: 18,
+          fontStyle: 'italic',
+          fontWeight: 'bold',
+          color: renderColorStatus(dataDetail?.statusId),
+        }}>
+        {' '}
+        {handleStatus(dataDetail?.statusId)}
+      </AppText>
 
       <View style={styles.content}>
         <ItemInfo

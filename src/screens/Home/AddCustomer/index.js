@@ -171,7 +171,7 @@ const AddCustomer = ({navigation}) => {
       // countryGeoName: addressDetail[2].long_name, //done
       countryGeoName: 'Việt Nam',
     };
-    console.log('params', params);
+
     ServiceHandle.post(Const.API.CreateCustomerAgent, params).then(res => {
       if (res.ok) {
         Toast.show({
@@ -181,6 +181,7 @@ const AddCustomer = ({navigation}) => {
         });
         navigation.goBack();
       } else {
+        console.log('params', params);
         SimpleToast.show(res.error, SimpleToast.SHORT);
       }
     });

@@ -1,7 +1,7 @@
 export default {
   API: {
     GetDomain: 'https://api.olbius.com/token',
-    baseURL: 'https://gstest.olbius.com',
+    // baseURL: 'https://gstest.olbius.com',
     // baseURL: 'http://10.10.4.19:8080',
     baseImgURL: 'https://testchth.olbius.com',
     Login: '/rest/s1/gsources/login',

@@ -61,7 +61,7 @@ const ListSaleOrderScreen = ({navigation}) => {
       .then(res => {
         if (res.ok) {
           setTotalData(res.data.TotalRows);
-          setListOrder(res.data.salesOrders);
+          setListOrder(res.data.orderList);
         } else {
           setTimeout(() => {
             SimpleToast.show(res.error, SimpleToast.SHORT);
@@ -96,7 +96,6 @@ const ListSaleOrderScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <AppLoading isVisible={loading} />
-
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={trans('listSaleOrder')} />

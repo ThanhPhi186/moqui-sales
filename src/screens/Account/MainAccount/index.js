@@ -37,8 +37,10 @@ const MainAccount = ({navigation}) => {
   };
 
   const changeCompany = () => {
+    ServiceHandle.setHeader('');
     dispatch(AuthenOverallRedux.Actions.logout.request());
     dispatch(AuthenOverallRedux.Actions.resetCompany());
+    dispatch(StoreRedux.Actions.changeStore(''));
   };
 
   return (
@@ -62,7 +64,7 @@ const MainAccount = ({navigation}) => {
           <View style={styles.smallIndicate} />
           <ItemAccount
             icon="gift-outline"
-            title={trans('changeStore')}
+            title={trans('changeSalesChannels')}
             onPress={() =>
               navigation.navigate(NAVIGATION_NAME.ChangeStore, {
                 fromScreen: NAVIGATION_NAME.MainAccount,
@@ -79,9 +81,7 @@ const MainAccount = ({navigation}) => {
           <ItemAccount
             icon="home-import-outline"
             title={trans('companyChange')}
-            onPress={() =>
-              SimpleToast.show('Tính năng đang phát triển', SimpleToast.SHORT)
-            }
+            onPress={() => setModalChangeCompany(true)}
           />
           <View style={styles.smallIndicate} />
           <ItemAccount

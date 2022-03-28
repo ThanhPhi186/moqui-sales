@@ -242,4 +242,5 @@ export default {
   content: 'Nội dung',
   passwordNotMatch: 'Nhập lại mật khẩu không khớp',
   revenue: 'Doanh thu',
+  salesChannels: 'Kênh bán hàng',
 };

@@ -1,4 +1,4 @@
-package com.moquisales;
+package com.montesales;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate; // <- add this necessary import
