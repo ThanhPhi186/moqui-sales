@@ -7,11 +7,12 @@ import MainNavigator from './src/navigations/MainNavigator';
 import {Colors} from './src/styles';
 import Toast from 'react-native-toast-message';
 import BootSplash from 'react-native-bootsplash';
-import {Animated, StyleSheet, Alert, Linking} from 'react-native';
+import {Animated, StyleSheet, Alert, Linking, Platform} from 'react-native';
 import {device_height} from './src/styles/Mixin';
 import {images} from './src/assets';
 import {RootView} from './src/screens';
 import 'react-native-gesture-handler';
+import VersionCheck from 'react-native-version-check';
 // import VersionCheck from 'react-native-version-check';
 
 const {persistor, store} = configureStore();
@@ -65,27 +66,42 @@ const App = () => {
     bootSplashLogoIsLoaded && init();
   }, [bootSplashLogoIsLoaded]);
 
-  // useEffect(() => {
-  //   // VersionCheck.getLatestVersion({
-  //   //   provider: 'appStore', // for iOS
-  //   // }).then(latestVersion => {
-  //   //   console.log(latestVersion); // 0.1.2
-  //   // });
-  //   VersionCheck.needUpdate({
-  //     currentVersion: '1.0',
-  //     latestVersion: '2.0',
-  //   }).then(async res => {
-  //     if (res.isNeeded) {
-  //       Alert.alert('Có phiên bản mới', 'Vui lòng cập nhật', [
-  //         {
-  //           text: 'OK',
-  //           onPress: async () =>
-  //             Linking.openURL(await VersionCheck.getStoreUrl()),
-  //         },
-  //       ]);
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    const checkUpdateVersion = async () => {
+      const currentVersion = await VersionCheck.getCurrentVersion({
+        provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+      });
+      const latestVersion = await VersionCheck.getLatestVersion({
+        provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+      });
+      VersionCheck.needUpdate({
+        depth: 2,
+        currentVersion: currentVersion,
+        latestVersion: latestVersion,
+      }).then(async res => {
+        if (res.isNeeded) {
+          let link = '';
+
+          if (Platform.OS === 'ios') {
+            link = 'https://apps.apple.com/vn/app/mont-e-sales/id1600641850';
+          } else {
+            link =
+              'https://play.google.com/store/apps/details?id=com.montesales';
+          }
+          Alert.alert(
+            'Đã có bản nâng cấp trên kho ứng dụng. Vui lòng cài đặt phiên bản mới nhất để sử dụng!',
+            [
+              {
+                text: 'OK',
+                onPress: async () => Linking.openURL(link),
+              },
+            ],
+          );
+        }
+      });
+    };
+    checkUpdateVersion();
+  }, []);
 
   return (
     <Provider store={store}>

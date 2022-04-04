@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppText} from '../../../components/atoms';
 import {AuthenOverallRedux, StoreRedux} from '../../../redux';
@@ -17,6 +17,7 @@ import {AppDialog} from '../../../components/molecules';
 import {NAVIGATION_NAME} from '../../../navigations';
 import {ServiceHandle} from '../../../services';
 import SimpleToast from 'react-native-simple-toast';
+import VersionCheck from 'react-native-version-check';
 
 const MainAccount = ({navigation}) => {
   const dispatch = useDispatch();
@@ -29,6 +30,17 @@ const MainAccount = ({navigation}) => {
 
   const [modalLogout, setModalLogout] = useState(false);
   const [modalChangeCompany, setModalChangeCompany] = useState(false);
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    const getCurrentVersion = async () => {
+      const currentVersion = await VersionCheck.getCurrentVersion({
+        provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+      });
+      setVersion(currentVersion);
+    };
+    getCurrentVersion();
+  }, []);
 
   const logout = () => {
     ServiceHandle.setHeader('');
@@ -88,6 +100,13 @@ const MainAccount = ({navigation}) => {
             icon="logout"
             title="Đăng xuất"
             onPress={() => setModalLogout(true)}
+          />
+          <View style={styles.smallIndicate} />
+          <ItemAccount
+            icon="layers-triple"
+            title={`Phiên bản ${version}`}
+            // onPress={() => setModalLogout(true)}
+            disabled
           />
         </ScrollView>
       </View>

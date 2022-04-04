@@ -109,7 +109,7 @@ const PromotionDetail = ({navigation, route}) => {
         </View>
         <AppText style={styles.title}>{trans('promotion')}</AppText>
         <View style={styles.containerItem}>
-          {rules.discounts?.map((elm, index) => {
+          {rules.map((elm, index) => {
             return (
               <View key={index}>
                 <AppText style={styles.title}>
@@ -124,9 +124,9 @@ const PromotionDetail = ({navigation, route}) => {
             );
           })}
         </View>
-        <AppText style={styles.title}>{trans('applicableLaw')}</AppText>
+        {/* <AppText style={styles.title}>{trans('applicableLaw')}</AppText>
         <View style={styles.containerItem}>
-          {rules.rules?.map((elm, index) => {
+          {rules.map((elm, index) => {
             return (
               <View key={index}>
                 <AppText style={styles.title}>
@@ -140,7 +140,7 @@ const PromotionDetail = ({navigation, route}) => {
               </View>
             );
           })}
-        </View>
+        </View> */}
       </View>
     </View>
   );

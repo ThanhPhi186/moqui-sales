@@ -31,6 +31,12 @@ const ChangePassword = ({navigation}) => {
     return false;
   };
 
+  const formatError = value => {
+    if (value.includes('Password incorrect for user SAGS0001')) {
+      return 'Mật khẩu cũ không đúng';
+    }
+  };
+
   const changePass = () => {
     if (handelCheckValue()) {
       setModalError(true);
@@ -49,16 +55,16 @@ const ChangePassword = ({navigation}) => {
             text1: trans('changePassSuccess'),
             visibilityTime: 2000,
           });
+          dispatch(AuthenOverallRedux.Actions.logout.request());
+          dispatch(StoreRedux.Actions.changeStore(''));
+          ServiceHandle.setHeader('');
         } else {
-          setMessErr(res.data.messages);
+          setMessErr(formatError(res.data.messages));
           setModalError(true);
         }
-        dispatch(AuthenOverallRedux.Actions.logout.request());
-        dispatch(StoreRedux.Actions.changeStore(''));
-        ServiceHandle.setHeader('');
       } else {
         setMessErr(
-          'Cần nhập chính xác mật khẩu cũ và không được trùng với 5 lần gần nhất',
+          'Mật khẩu mới cần chứa chữ, chữ số, kí tự đặc biệt và không được trùng với 5 lần gần nhất',
         );
         setModalError(true);
       }

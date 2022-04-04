@@ -31,18 +31,25 @@ const PromotionScreen = ({navigation}) => {
 
   const [loading, setLoading] = useState(false);
 
+  console.log('store', store);
+
   useEffect(() => {
     const getPromotion = async () => {
       setLoading(true);
       try {
-        const params = {
-          productStoreId: store.productStoreId,
-        };
-        const res = await ServiceHandle.get(Const.API.GetPromoList, params);
+        // const params = {
+        //   pageIndex: 0,
+        //   pageSize: 0,
+        //   storePromotionIdTerm: store.productStoreId,
+        //   storeNameTerm: store.storeName,
+        // };
+        const res = await ServiceHandle.get(Const.API.GetPromoList);
         if (res.ok) {
           setListPromotion(res.data.promoList);
         } else {
-          SimpleToast.show(res.error, SimpleToast.SHORT);
+          setTimeout(() => {
+            SimpleToast.show(res.error, SimpleToast.SHORT);
+          }, 700);
         }
       } catch (error) {
       } finally {

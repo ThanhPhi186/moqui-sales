@@ -261,16 +261,13 @@ const SelectProduct = ({navigation, route}) => {
         position => {
           const params = {
             customerId: customer.partyId,
-            // latitude: position.coords.latitude,
-            // longitude: position.coords.longitude,
-            latitude: 20.9934524,
-            longitude: 105.7865343,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
           };
 
           ServiceHandle.post(Const.API.SalesmanCheckIn, params).then(res => {
             if (res.ok) {
               if (res.data.checkInOk === 'Y') {
-                // dispatch(CustomerRedux.Actions.checkIn(customer.partyIdTo));
                 navigation.setParams({item: {...customer, checkInOk: 'Y'}});
                 Toast.show({
                   type: 'success',

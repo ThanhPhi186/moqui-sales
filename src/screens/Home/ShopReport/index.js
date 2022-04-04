@@ -21,6 +21,7 @@ const ShopReport = ({navigation, route}) => {
 
   const [data, setData] = useState();
   const [xAxis, setAxis] = useState();
+  const [dataOrder, setDataOrder] = useState([]);
 
   const [yAxis] = useState({
     left: {
@@ -50,6 +51,7 @@ const ShopReport = ({navigation, route}) => {
       };
       ServiceHandle.get(Const.API.GetCustomerReports, params).then(res => {
         if (res.ok) {
+          setDataOrder(res.data.lastFiveOrders);
           const amountArr = res.data.lastFiveOrders
             .map(elm => {
               return Number(elm.grand_total) / 1000;
@@ -63,7 +65,8 @@ const ShopReport = ({navigation, route}) => {
             .reverse();
 
           setTotalPrice(sum(amountArr) * 1000);
-          console.log('amountArr', amountArr);
+
+          console.log('amountArr', amountArr, timeArr);
 
           setData({
             dataSets: [
@@ -115,21 +118,28 @@ const ShopReport = ({navigation, route}) => {
               {numeral(totalPrice).format()} đ
             </AppText>
           </View>
-          <BarChart
-            style={styles.chart}
-            data={data}
-            xAxis={xAxis}
-            yAxis={yAxis}
-            animation={{durationY: 1500}}
-            legend={legend}
-            gridBackgroundColor={processColor('#ffffff')}
-            visibleRange={{x: {min: 5, max: 5}}}
-            drawBarShadow={false}
-            drawValueAboveBar={true}
-            drawHighlightArrow={false}
-            chartDescription={{text: ''}}
-            extraOffsets={{bottom: 10}}
-          />
+          {dataOrder.length > 0 ? (
+            <BarChart
+              style={styles.chart}
+              data={data}
+              xAxis={xAxis}
+              yAxis={yAxis}
+              animation={{durationY: 1500}}
+              legend={legend}
+              gridBackgroundColor={processColor('#ffffff')}
+              visibleRange={{x: {min: 5, max: 5}}}
+              drawBarShadow={false}
+              drawValueAboveBar={true}
+              drawHighlightArrow={false}
+              chartDescription={{text: ''}}
+              extraOffsets={{bottom: 10}}
+            />
+          ) : (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <AppText>Chưa phát sinh dữ liệu</AppText>
+            </View>
+          )}
           <AppText style={{marginLeft: 20, marginTop: 4, fontWeight: 'bold'}}>
             (*) Báo cáo doanh thu được tổng hợp từ 5 đơn hàng gần nhất
           </AppText>

@@ -160,7 +160,7 @@ const HomeScreen = ({navigation}) => {
           />
           <ItemHomeMenu
             iconName="history"
-            title={`Thay đổi ${'\n'} cửa hàng`}
+            title={`Thay đổi ${'\n'} kênh bán hàng`}
             onPress={() =>
               navigation.navigate(NAVIGATION_NAME.ChangeStore, {
                 fromScreen: NAVIGATION_NAME.HomeScreen,

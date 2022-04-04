@@ -10,9 +10,9 @@ export default {
 
     GetProductStores: '/rest/s1/gsources/getProductStores',
     GetCustomers: '/rest/s1/salesnet/mGetCustomers',
-    GetPromoList: '/rest/s1/pos/getPromoList',
+    GetPromoList: '/rest/s1/salesnet/getPromoList',
     QuickSearch: '/rest/s1/gsources/quickSearch',
-    GetProductDetail: '/rest/s1/sales/getProductDetail',
+    GetProductDetail: '/rest/s1/salesnet/getProductDetail',
     GetSalesOrders: '/rest/s1/salesnet/mGetSalesOrders',
     GetSalesOrderDetails: '/rest/s1/salesnet/mGetSalesOrderDetails',
     GetCustomerRegistration: '/rest/s1/salesnet/mGetCustomerRegistration',

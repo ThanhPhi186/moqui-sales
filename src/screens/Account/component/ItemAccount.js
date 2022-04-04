@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../../../styles';
 
 const ItemAccount = props => {
-  const {icon, title, onPress, point} = props;
+  const {icon, title, point} = props;
   if (point) {
     return (
       <View style={styles.container}>
@@ -27,7 +27,7 @@ const ItemAccount = props => {
     );
   }
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity {...props} style={styles.container}>
       <View style={{width: '80%', flexDirection: 'row', alignItems: 'center'}}>
         <Icon name={icon} size={24} style={styles.ic} color={Colors.ORANGE} />
         <AppText style={styles.textTitle}>{title}</AppText>
