@@ -13,6 +13,7 @@ import {images} from './src/assets';
 import {RootView} from './src/screens';
 import 'react-native-gesture-handler';
 import VersionCheck from 'react-native-version-check';
+import SimpleToast from 'react-native-simple-toast';
 // import VersionCheck from 'react-native-version-check';
 
 const {persistor, store} = configureStore();
@@ -68,40 +69,50 @@ const App = () => {
 
   useEffect(() => {
     const checkUpdateVersion = async () => {
-      const currentVersion = await VersionCheck.getCurrentVersion({
-        provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-      });
-      const latestVersion = await VersionCheck.getLatestVersion({
-        provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-      });
-      VersionCheck.needUpdate({
-        depth: 2,
-        currentVersion: currentVersion,
-        latestVersion: latestVersion,
-      }).then(async res => {
-        if (res.isNeeded) {
-          let link = '';
-
-          if (Platform.OS === 'ios') {
-            link = 'https://apps.apple.com/vn/app/mont-e-sales/id1600641850';
-          } else {
-            link =
-              'https://play.google.com/store/apps/details?id=com.montesales';
+      try {
+        // const currentVersion = await VersionCheck.getCurrentVersion({
+        //   provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+        // });
+        // const latestVersion = await VersionCheck.getLatestVersion({
+        //   provider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+        // });
+        // console.log('currentVersion', currentVersion, latestVersion);
+        VersionCheck.needUpdate({
+          depth: 2,
+          // currentVersion: currentVersion,
+          // latestVersion: latestVersion,
+        }).then(res => {
+          if (res.isNeeded) {
+            Alert.alert(
+              'Thông báo',
+              'Đã có bản nâng cấp trên kho ứng dụng. Vui lòng cài đặt phiên bản mới nhất để sử dụng!',
+              [{text: 'OK', onPress: openAppStore}],
+            );
           }
-          Alert.alert(
-            'Đã có bản nâng cấp trên kho ứng dụng. Vui lòng cài đặt phiên bản mới nhất để sử dụng!',
-            [
-              {
-                text: 'OK',
-                onPress: async () => Linking.openURL(link),
-              },
-            ],
-          );
-        }
-      });
+        });
+      } catch (error) {
+        SimpleToast.show(error, SimpleToast.SHORT);
+      }
     };
     checkUpdateVersion();
   }, []);
+
+  const openAppStore = () => {
+    let link = '';
+
+    if (Platform.OS === 'ios') {
+      link = 'https://apps.apple.com/vn/app/mont-e-sales/id1600641850';
+    } else {
+      link = 'https://play.google.com/store/apps/details?id=com.montesales';
+    }
+
+    Linking.canOpenURL(link).then(
+      supported => {
+        supported && Linking.openURL(link);
+      },
+      err => console.log(err),
+    );
+  };
 
   return (
     <Provider store={store}>

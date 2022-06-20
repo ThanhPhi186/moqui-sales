@@ -34,24 +34,34 @@ const ChooseCustomer = ({navigation, route}) => {
 
   const [listInLine, setListInLine] = useState([]);
   const [listLeftLine, setListLeftLine] = useState([]);
-  const [dataInline, setDataInline] = useState();
-  const [dataLeftLine, setDataLeftLine] = useState();
+  const [dataInline, setDataInline] = useState([]);
+  const [dataLeftLine, setDataLeftLine] = useState([]);
+
+  const [listTotal, setListTotal] = useState([]);
+  const [dataTotal, setDataTotal] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    getCustomer();
+    getCustomer(setLoading);
   }, []);
 
-  const getCustomer = async () => {
-    setLoading(true);
+  const getCustomer = async handleLoading => {
+    handleLoading(true);
     try {
       const params = {productStoreId: store.productStoreId};
       const response = await ServiceHandle.get(Const.API.GetCustomers, params);
       if (response.ok) {
-        setDataInline(response.data.inRoute.customers);
-        setListInLine(response.data.inRoute.customers);
-        setDataLeftLine(response.data.outRoute.customers);
-        setListLeftLine(response.data.outRoute.customers);
+        const {data} = response;
+        const responseInline = data.inRoute.customers;
+        const responseLeftLine = data.outRoute.customers;
+
+        setDataInline(responseInline);
+        setListInLine(responseInline);
+        setDataLeftLine(responseLeftLine);
+        setListLeftLine(responseLeftLine);
+        setDataTotal(responseInline.concat(responseLeftLine));
+        setListTotal(responseInline.concat(responseLeftLine));
       } else {
         setTimeout(() => {
           SimpleToast.show(response.error, SimpleToast.SHORT);
@@ -62,33 +72,41 @@ const ChooseCustomer = ({navigation, route}) => {
         SimpleToast.show(error, SimpleToast.SHORT);
       }, 700);
     } finally {
-      setLoading(false);
+      handleLoading(false);
     }
   };
 
   const onRefresh = () => {
-    getCustomer();
+    getCustomer(setRefreshing);
   };
 
-  const onChangeSearch = txt => {
-    const searchInline = listInLine.filter(elm => {
+  const onChangeSearch = (text, data, setData) => {
+    const searchData = data.filter(elm => {
       return (
-        removeDiacritics(elm?.postalAddress).includes(removeDiacritics(txt)) ||
-        removeDiacritics(elm?.officeSiteName).includes(removeDiacritics(txt))
-        // ||
-        // elm?.telecomNumber.includes(txt)
+        removeDiacritics(elm.postalAddress || '').includes(
+          removeDiacritics(text),
+        ) ||
+        removeDiacritics(elm.officeSiteName || '').includes(
+          removeDiacritics(text),
+        ) ||
+        removeDiacritics(elm.telecomNumber || '').includes(
+          removeDiacritics(text),
+        )
       );
     });
-    const searchLeftLine = listLeftLine.filter(elm => {
-      return (
-        removeDiacritics(elm?.postalAddress).includes(removeDiacritics(txt)) ||
-        removeDiacritics(elm?.officeSiteName).includes(removeDiacritics(txt))
-        // ||
-        // elm?.telecomNumber.includes(txt)
-      );
-    });
-    setDataInline(searchInline);
-    setDataLeftLine(searchLeftLine);
+    setData(searchData);
+  };
+
+  const setTypeSearch = text => {
+    if (screens) {
+      onChangeSearch(text, listTotal, setDataTotal);
+    } else {
+      if (index === 0) {
+        onChangeSearch(text, listInLine, setDataInline);
+      } else {
+        onChangeSearch(text, listLeftLine, setDataLeftLine);
+      }
+    }
   };
 
   const goScreens = item => {
@@ -111,49 +129,27 @@ const ChooseCustomer = ({navigation, route}) => {
     return <AppText style={styles.txtEmpty}>{trans('notCustomer')}</AppText>;
   };
 
-  const InLine = () => {
+  const renderFlatList = data => {
     return (
       <FlatList
-        data={dataInline}
+        data={data}
         renderItem={({item}) => renderItem(item)}
-        keyExtractor={(item, indexInline) => indexInline.toString()}
-        extraData={dataInline}
+        keyExtractor={(item, indexFlatList) => indexFlatList.toString()}
+        extraData={data}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyComponent}
-        // refreshControl={
-        //   <RefreshControl refreshing={loading} onRefresh={onRefresh} />
-        // }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     );
   };
-  const LeftLine = () => {
-    return (
-      <FlatList
-        data={dataLeftLine}
-        renderItem={({item}) => renderItem(item)}
-        keyExtractor={(item, indexLeftLine) => indexLeftLine.toString()}
-        extraData={dataLeftLine}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={renderEmptyComponent}
-        // refreshControl={
-        //   <RefreshControl refreshing={loading} onRefresh={onRefresh} />
-        // }
-      />
-    );
-  };
-
-  const renderScene = SceneMap({
-    inLine: InLine,
-    leftLine: LeftLine,
-  });
 
   const renderTabBar = props => (
     <TabBar
       {...props}
       indicatorStyle={{backgroundColor: theme.colors.background}}
       style={{backgroundColor: Colors.PRIMARY, shadowColor: theme.colors.text}}
-      // labelStyle={{color: theme.colors.primary}}
-      // pressColor="red"
     />
   );
   const renderItem = item => {
@@ -166,6 +162,11 @@ const ChooseCustomer = ({navigation, route}) => {
     );
   };
 
+  const renderScene = SceneMap({
+    inLine: () => renderFlatList(dataInline),
+    leftLine: () => renderFlatList(dataLeftLine),
+  });
+
   return (
     <View style={styles.container}>
       <AppLoading isVisible={loading} />
@@ -176,8 +177,7 @@ const ChooseCustomer = ({navigation, route}) => {
       <View style={styles.containerSearch}>
         <Searchbar
           placeholder={trans('searchCustomer')}
-          onChangeText={onChangeSearch}
-          // value={searchQuery}
+          onChangeText={setTypeSearch}
           style={{width: '90%', borderRadius: 12}}
           inputStyle={{fontStyle: 'italic'}}
         />
@@ -192,7 +192,7 @@ const ChooseCustomer = ({navigation, route}) => {
           style={{flex: 10}}
         />
       ) : (
-        <View style={{flex: 10}}>{InLine()}</View>
+        <View style={{flex: 10}}>{renderFlatList(dataTotal)}</View>
       )}
       <FAB
         style={styles.fab}

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, Text, TouchableOpacity, View, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Appbar} from 'react-native-paper';
 
@@ -19,11 +19,18 @@ import Clipboard from '@react-native-community/clipboard';
 
 const ShareScreen = () => {
   const userInfo = useSelector(state => state.AuthenOverallReducer.userAuthen);
+  const [link, setLink] = useState('');
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      setLink('https://apps.apple.com/vn/app/mont-e-sales/id1600641850');
+    } else {
+      setLink('https://play.google.com/store/apps/details?id=com.montesales');
+    }
+  }, []);
 
   const coppyText = () => {
-    Clipboard.setString(
-      'https://play.google.com/store/apps/details?id=com.mont_e',
-    );
+    Clipboard.setString(link);
     SimpleToast.show('Sao chép mã giới thiệu thành công', SimpleToast.SHORT);
   };
 
@@ -66,7 +73,7 @@ const ShareScreen = () => {
                 alignItems: 'center',
               }}
               style={{fontWeight: 'bold'}}>
-              https://play.google.com/store/apps/details?id=com.mont_e
+              {link}
             </AppText>
             <TouchableOpacity
               onPress={coppyText}
